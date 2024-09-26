@@ -24,7 +24,7 @@ class App extends Component {
                 <Redirect from="/" exact to="/products" />
                 <Route path="/products" component={Products} />
                 <Route path="/about" component={About} />
-                <Route path="/mortgageCalculator" component={MortgageCalculator} />
+                <Route path="/loanCaluclator" component={MortgageCalculator} />
                 <Route exact path="**" component={NotFound} />
               </Switch>
             </Suspense>

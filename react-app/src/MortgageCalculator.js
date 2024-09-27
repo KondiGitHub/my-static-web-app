@@ -10,7 +10,7 @@ const MortgageCalculator = () => {
 
   const calculateMortgage = () => {
     const principalAmount = parseFloat(principal);
-    const annualInterestRate = parseFloat(interestRate) / 100;
+    const annualInterestRate = parseFloat(interestRate)/100;
     const totalYears = parseFloat(years);
     const extraMonthlyPayment = parseFloat(extraPayment) || 0.00;
 
@@ -28,13 +28,17 @@ const MortgageCalculator = () => {
     const totalInterestPaidForMonth = totalInterestPaidForYear / 12;
 
     let remainingBalance = principalAmount;
-    let month = 0;
+    let month = 1;
 
     while (remainingBalance > 0) {
       remainingBalance = remainingBalance * (1 + monthlyInterestRate) - totalMonthlyPayment;
       if (remainingBalance > 0) {
         month++;
       }
+    }
+
+    if(remainingBalance<0){
+      remainingBalance =0;
     }
 
     const remainingYears = (month / 12).toFixed(1);

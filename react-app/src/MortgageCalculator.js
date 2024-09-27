@@ -58,6 +58,7 @@ const MortgageCalculator = () => {
   };
 
   return (
+    
     <div className="container">
       <h2>Mortgage Calculator</h2>
       <label htmlFor="principal">Principal Amount ($):</label>
@@ -100,6 +101,7 @@ const MortgageCalculator = () => {
 
       {/* Conditionally render the results */}
       {results && (
+        <div className="scrollable">
         <div className="result" id="resultDiv">
         <p className="color1">Monthly Payment: ${results.monthlyPayment}</p>
         <p className="color2">Total Monthly Payment (including extra): ${results.totalMonthlyPayment}</p>
@@ -110,6 +112,7 @@ const MortgageCalculator = () => {
         <p className="color7">Total Interest Paid With Extra Payment: ${results.totalInterestPaidWithExtraPayment}</p>
         <p className="color8">Total Interest Paid For Year With Extra Payment: ${results.totalInterestPaidForYearWithExtraPayment}</p>
         <p className="color9">Total Interest Paid For Month With Extra Payment: ${results.totalInterestPaidForMonthWithExtraPayment}</p>
+        </div>
         </div>
       )}
     </div>

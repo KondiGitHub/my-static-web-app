@@ -17,6 +17,7 @@ body {
     border-radius: 10px; /* Optional: give it rounded corners */
     background-color: #f9f9f9; /* Optional: add a background color */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for emphasis */
+    overflow: auto;
   }
 label {
     display: block;
@@ -59,7 +60,7 @@ button:hover {
   }
   
   .color3 {
-    color: #33ff57; /* Bright green */
+    color: rgb(51, 58, 255); /* Bright green */
   }
   
   .color4 {
@@ -75,14 +76,14 @@ button:hover {
   }
   
   .color7 {
-    color: #33ffa8; /* Aqua-green */
+    color: #ff33a8; /* Pinkish */
   }
   
   .color8 {
-    color: #ff3333; /* Red */
+    color: #ffa833; /* Orange */
   }
   
   .color9 {
-    color: #33ffeb; /* Light teal */
+    color: #9c33ff; /* Purple */
   }
   

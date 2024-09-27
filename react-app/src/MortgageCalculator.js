@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import './MortgageCalculator.css';
 
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState('');
   const [interestRate, setInterestRate] = useState('');
   const [years, setYears] = useState('');
   const [extraPayment, setExtraPayment] = useState('');
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState(null); // Initial state set to null
 
   const calculateMortgage = () => {
     const principalAmount = parseFloat(principal);
@@ -42,6 +43,7 @@ const MortgageCalculator = () => {
     const totalInterestPaidForYearWithExtraMoney = totalInterestPaidWithExtraMoney / totalYears;
     const totalInterestPaidForMonthWithExtraMoney = totalInterestPaidForYearWithExtraMoney / 12;
 
+    // Set results with data
     setResults({
       monthlyPayment: monthlyPayment.toFixed(2),
       totalMonthlyPayment: totalMonthlyPayment.toFixed(2),
@@ -96,17 +98,20 @@ const MortgageCalculator = () => {
 
       <button onClick={calculateMortgage}>Calculate Mortgage</button>
 
-      <div className="result">
-        <p>Monthly Payment: ${results.monthlyPayment}</p>
-        <p>Total Monthly Payment (including extra): ${results.totalMonthlyPayment}</p>
-        <p>Remaining Years to Pay Off: {results.remainingYears} years</p>
-        <p>Total Interest Paid: ${results.totalInterestPaid}</p>
-        <p>Total Interest Paid For Year: ${results.totalInterestPaidForYear}</p>
-        <p>Total Interest Paid For Month: ${results.totalInterestPaidForMonth}</p>
-        <p>Total Interest Paid With Extra Payment: ${results.totalInterestPaidWithExtraPayment}</p>
-        <p>Total Interest Paid For Year With Extra Payment: ${results.totalInterestPaidForYearWithExtraPayment}</p>
-        <p>Total Interest Paid For Month With Extra Payment: ${results.totalInterestPaidForMonthWithExtraPayment}</p>
-      </div>
+      {/* Conditionally render the results */}
+      {results && (
+        <div className="result" id="resultDiv">
+        <p className="color1">Monthly Payment: ${results.monthlyPayment}</p>
+        <p className="color2">Total Monthly Payment (including extra): ${results.totalMonthlyPayment}</p>
+        <p className="color3">Remaining Years to Pay Off: {results.remainingYears} years</p>
+        <p className="color4">Total Interest Paid: ${results.totalInterestPaid}</p>
+        <p className="color5">Total Interest Paid For Year: ${results.totalInterestPaidForYear}</p>
+        <p className="color6">Total Interest Paid For Month: ${results.totalInterestPaidForMonth}</p>
+        <p className="color7">Total Interest Paid With Extra Payment: ${results.totalInterestPaidWithExtraPayment}</p>
+        <p className="color8">Total Interest Paid For Year With Extra Payment: ${results.totalInterestPaidForYearWithExtraPayment}</p>
+        <p className="color9">Total Interest Paid For Month With Extra Payment: ${results.totalInterestPaidForMonthWithExtraPayment}</p>
+        </div>
+      )}
     </div>
   );
 };

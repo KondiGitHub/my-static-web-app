@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+.container {
+    width: 120%; /* Increase the width to make it bigger */
+    max-width: 1200px; /* Set a max-width to avoid it getting too large */
+    margin: 0 auto; /* Center the container on the page */
+    padding: 40px; /* Add padding to make it look larger */
+    border: 1px solid #ddd; /* Optional: add a border to make it stand out */
+    border-radius: 10px; /* Optional: give it rounded corners */
+    background-color: #f9f9f9; /* Optional: add a background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for emphasis */
+  }
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+}
+.result {
+    margin-top: 20px;
+}
+
+.result p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .color1 {
+    color: #ff5733; /* Reddish-orange */
+  }
+  
+  .color2 {
+    color: #33c1ff; /* Light blue */
+  }
+  
+  .color3 {
+    color: #33ff57; /* Bright green */
+  }
+  
+  .color4 {
+    color: #ff33a8; /* Pinkish */
+  }
+  
+  .color5 {
+    color: #ffa833; /* Orange */
+  }
+  
+  .color6 {
+    color: #9c33ff; /* Purple */
+  }
+  
+  .color7 {
+    color: #33ffa8; /* Aqua-green */
+  }
+  
+  .color8 {
+    color: #ff3333; /* Red */
+  }
+  
+  .color9 {
+    color: #33ffeb; /* Light teal */
+  }
+  

@@ -5,7 +5,11 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { HeaderBar, NavBar, NotFound } from './components';
 import About from './About';
-import MortgageCalculator from './MortgageCalculator';
+import MortgageCalculator from './products/MortgageCalculator';
+import Home from './components/Home';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import PhotoGallery from './components/PhotoGallery';
 
 const Products = withRouter(
   lazy(() => import(/* webpackChunkName: "products" */ './products/Products'))
@@ -15,16 +19,20 @@ class App extends Component {
   render() {
     return (
       <div>
-        <HeaderBar />
+        {/* <HeaderBar /> */}
         <div className="section columns">
-          <NavBar />
+          {/* <NavBar /> */}
           <main className="column">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
-                <Redirect from="/" exact to="/products" />
+                <Redirect from="/" exact to="/home" />
                 {/* <Route path="/products" component={Products} />
                 <Route path="/about" component={About} /> */}
-                <Route path="/loanCaluclator" component={MortgageCalculator} />
+                 <Route exact path="/home" component={Home} />
+                <Route exact path="/loanCaluclator" component={MortgageCalculator} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/photo-galary" component={PhotoGallery} />
                 <Route exact path="**" component={NotFound} />
               </Switch>
             </Suspense>

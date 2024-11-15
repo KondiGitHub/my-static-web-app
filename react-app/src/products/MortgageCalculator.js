@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../MortgageCalculator.css';
 
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState('');
   const [interestRate, setInterestRate] = useState('');
+  const [annualRate, setAnnualRate] = useState(5);
   const [years, setYears] = useState('');
   const [extraPayment, setExtraPayment] = useState('');
+  const [monthlyPayment, setMonthlyPayment] = useState(null);
   const [results, setResults] = useState(null); // Initial state set to null
+  const history = useHistory();
+
+
+  const calculateMonthlyPayment = (P, annualRate, years) => {
+    const monthlyRate = annualRate / 12 / 100;
+    const numPayments = years * 12;
+    return (P * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+           (Math.pow(1 + monthlyRate, numPayments) - 1);
+  };
+
+  // Handle form submission and navigate to the details page
+  const handleCalculate = () => {
+    const payment = calculateMonthlyPayment(principal, annualRate, years);
+    setMonthlyPayment(payment);
+    history.push('/detailedLoan', {
+      principal,
+      annualRate,
+      years,
+      monthlyPayment: payment,
+    });
+  };
 
   const calculateMortgage = () => {
     const principalAmount = parseFloat(principal);
@@ -58,6 +82,7 @@ const MortgageCalculator = () => {
       totalInterestPaidWithExtraPayment: totalInterestPaidWithExtraMoney.toFixed(2),
       totalInterestPaidForYearWithExtraPayment: totalInterestPaidForYearWithExtraMoney.toFixed(2),
       totalInterestPaidForMonthWithExtraPayment: totalInterestPaidForMonthWithExtraMoney.toFixed(2),
+      annualRate:annualInterestRate
     });
   };
 
@@ -117,6 +142,7 @@ const MortgageCalculator = () => {
         <p className="color8">Total Interest Paid For Year With Extra Payment: ${results.totalInterestPaidForYearWithExtraPayment}</p>
         <p className="color9">Total Interest Paid For Month With Extra Payment: ${results.totalInterestPaidForMonthWithExtraPayment}</p>
         </div>
+        <button onClick={handleCalculate}>Calculate & View Details</button>
         </div>
       )}
     </div>

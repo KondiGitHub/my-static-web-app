@@ -1,0 +1,81 @@
+/* Center container styling */
+.container {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 90%;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Back button styling */
+  button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Scrollable table container */
+  .table-container {
+    max-height: 60vh; /* Adjust this value as needed */
+    overflow-y: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    table {
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .container {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    table {
+      font-size: 12px;
+    }
+  }
+  

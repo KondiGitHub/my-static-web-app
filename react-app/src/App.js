@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { HeaderBar, NavBar, NotFound } from './components';
 import About from './About';
 import MortgageCalculator from './products/MortgageCalculator';
+import MortagegeDetails from './products/MortagageDetails';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route path="/about" component={About} /> */}
                  <Route exact path="/home" component={Home} />
                 <Route exact path="/loanCaluclator" component={MortgageCalculator} />
+                <Route exact path="/detailedLoan" component={ MortagegeDetails} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/photo-galary" component={PhotoGallery} />

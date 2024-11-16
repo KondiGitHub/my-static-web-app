@@ -5,7 +5,7 @@ import '../MortgageCalculator.css';
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState('');
   const [interestRate, setInterestRate] = useState('');
-  const [annualRate, setAnnualRate] = useState(5);
+  const [annualRate, setAnnualRate] = useState('');
   const [years, setYears] = useState('');
   const [extraPayment, setExtraPayment] = useState('');
   const [monthlyPayment, setMonthlyPayment] = useState(null);
@@ -13,22 +13,15 @@ const MortgageCalculator = () => {
   const history = useHistory();
 
 
-  const calculateMonthlyPayment = (P, annualRate, years) => {
-    const monthlyRate = annualRate / 12 / 100;
-    const numPayments = years * 12;
-    return (P * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
-           (Math.pow(1 + monthlyRate, numPayments) - 1);
-  };
 
   // Handle form submission and navigate to the details page
-  const handleCalculate = () => {
-    const payment = calculateMonthlyPayment(principal, annualRate, years);
-    setMonthlyPayment(payment);
+  const handleCalculate = (results) => {
     history.push('/detailedLoan', {
       principal,
-      annualRate,
+      annualRate: results.annualRate,
       years,
-      monthlyPayment: payment,
+      monthlyPayment: results.monthlyPayment,
+      extraMonthlyPayment: results.extraMonthlyPayment
     });
   };
 
@@ -52,7 +45,7 @@ const MortgageCalculator = () => {
     const totalInterestPaidForMonth = totalInterestPaidForYear / 12;
 
     let remainingBalance = principalAmount;
-    let month = 1;
+    let month = 0;
 
     while (remainingBalance > 0) {
       remainingBalance = remainingBalance * (1 + monthlyInterestRate) - totalMonthlyPayment;
@@ -82,7 +75,8 @@ const MortgageCalculator = () => {
       totalInterestPaidWithExtraPayment: totalInterestPaidWithExtraMoney.toFixed(2),
       totalInterestPaidForYearWithExtraPayment: totalInterestPaidForYearWithExtraMoney.toFixed(2),
       totalInterestPaidForMonthWithExtraPayment: totalInterestPaidForMonthWithExtraMoney.toFixed(2),
-      annualRate:annualInterestRate
+      annualRate:annualInterestRate,
+      extraMonthlyPayment
     });
   };
 
@@ -142,7 +136,7 @@ const MortgageCalculator = () => {
         <p className="color8">Total Interest Paid For Year With Extra Payment: ${results.totalInterestPaidForYearWithExtraPayment}</p>
         <p className="color9">Total Interest Paid For Month With Extra Payment: ${results.totalInterestPaidForMonthWithExtraPayment}</p>
         </div>
-        <button onClick={handleCalculate}>Calculate & View Details</button>
+        <button onClick={() => handleCalculate(results)}>Calculate & View Details</button>
         </div>
       )}
     </div>

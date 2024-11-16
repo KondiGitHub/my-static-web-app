@@ -6,22 +6,29 @@ function MortagegeDetails() {
   const location = useLocation();
   const history = useHistory();
 
-  const { principal, annualRate, years, monthlyPayment } = location.state;
-  const monthlyRate = annualRate / 12 / 100;
+  const { principal, annualRate, years, monthlyPayment,extraMonthlyPayment } = location.state;
+  const monthlyRate = annualRate/12;
   const numPayments = years * 12;
   let balance = principal;
+  let extraPayment = 0
+
+  if(extraMonthlyPayment === undefined) {
+    extraPayment = 0;
+  } else {
+    extraPayment = extraMonthlyPayment;
+  }
 
   // Generate the amortization schedule
   const schedule = [];
   for (let month = 1; month <= numPayments; month++) {
     const interestPayment = balance * monthlyRate;
-    const principalPayment = monthlyPayment - interestPayment;
-    balance -= principalPayment;
+    const principalPayment = monthlyPayment - interestPayment ;
+    balance = balance - principalPayment - extraPayment;
     if (balance < 0) balance = 0;
 
     schedule.push({
       month,
-      payment: monthlyPayment.toFixed(2),
+      payment: monthlyPayment,
       interest: interestPayment.toFixed(2),
       principal: principalPayment.toFixed(2),
       balance: balance.toFixed(2),

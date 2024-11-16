@@ -8,7 +8,7 @@ const generatePhotos = (year, count = 30) => {
     id: `${index+1}`,
     year,
     type: 'photo',
-    src: `https://venkatstoragemailaram.blob.core.windows.net/ammulu/${year}/${index+1}`,
+    src: `https://venkatstoragemailaram.blob.core.windows.net/ammulu/${year}/${index+1}.jpg`,
     alt: `Photo from ${year} - ${index + 1}`,
   }));
 };

@@ -5,10 +5,10 @@ import Modal from './Modal';
 // Generate sample photos
 const generatePhotos = (year, count = 30) => {
   return Array.from({ length: count }, (_, index) => ({
-    id: `photo-${index}`,
+    id: `${index+1}`,
     year,
     type: 'photo',
-    src: `https://picsum.photos/300/200?random=${index + year}`,
+    src: `https://venkatstoragemailaram.blob.core.windows.net/ammulu/${year}/${index+1}`,
     alt: `Photo from ${year} - ${index + 1}`,
   }));
 };
@@ -26,10 +26,11 @@ const generateVideos = (year, count = 10) => {
 
 // Sample data
 const mediaData = [
-  ...generatePhotos(2023, 50),
-  ...generateVideos(2023, 20),
-  ...generatePhotos(2022, 30),
-  ...generateVideos(2022, 15),
+  ...generatePhotos(2009, 50),
+  ...generateVideos(2010, 20),
+  ...generateVideos(2011, 20),
+  ...generatePhotos(2012, 30),
+  ...generateVideos(2013, 15),
 ];
 
 const PhotoGallery = () => {

@@ -37,10 +37,17 @@ function MortagegeDetails() {
     if (balance <= 0) break;
   }
 
+  const gotoOverView = () => {
+    localStorage.setItem('principal', principal);
+    localStorage.setItem('annualRate', annualRate);
+    localStorage.setItem('years', years);
+    history.push('/loanCaluclator');
+  };
+
   return (
     <div className="container">
       <h2>Amortization Schedule</h2>
-      <button onClick={() => history.push('/loanCaluclator')}>Back to Overview</button>
+      <button onClick={() => gotoOverView()}>Back to Overview</button>
       <div className="table-container">
       <table>
         <thead>

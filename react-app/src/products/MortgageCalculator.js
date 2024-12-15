@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../MortgageCalculator.css';
 
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState('');
   const [interestRate, setInterestRate] = useState('');
+  const [previousData, setPreviousData] = useState(null);
+
   const [annualRate, setAnnualRate] = useState('');
   const [years, setYears] = useState('');
   const [extraPayment, setExtraPayment] = useState('');
@@ -12,10 +14,27 @@ const MortgageCalculator = () => {
   const [results, setResults] = useState(null); // Initial state set to null
   const history = useHistory();
 
+  useEffect(() => {
+    const tempPrinciple= localStorage.getItem('principal');
+    const tempAnnualRate= localStorage.getItem('annualRate')
+    const tempYears= localStorage.getItem('years')
+    if(tempPrinciple) {
+      setPrincipal(tempPrinciple);
+    }
+    if(tempAnnualRate) {
+      let annualRate = tempAnnualRate*100;
+      setInterestRate(annualRate.toFixed(1));
+    }
+    if(tempYears) {
+      setYears(tempYears);
+    }
+   
+  }, []);
 
 
   // Handle form submission and navigate to the details page
   const handleCalculate = (results) => {
+    localStorage.setItem('previousData', {principal,annualRate: results.annualRate,years});
     history.push('/detailedLoan', {
       principal,
       annualRate: results.annualRate,
@@ -27,57 +46,60 @@ const MortgageCalculator = () => {
 
   const calculateMortgage = () => {
     const principalAmount = parseFloat(principal);
-    const annualInterestRate = parseFloat(interestRate)/100;
-    const totalYears = parseFloat(years);
-    const extraMonthlyPayment = parseFloat(extraPayment) || 0.00;
-
-    const monthlyInterestRate = annualInterestRate / 12;
-    const totalPayments = totalYears * 12;
-
-    const monthlyPayment =
-      (principalAmount * monthlyInterestRate) /
-      (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
-
-    const totalMonthlyPayment = monthlyPayment + extraMonthlyPayment;
-
-    const totalInterestPaid = monthlyPayment * totalPayments - principalAmount;
-    const totalInterestPaidForYear = totalInterestPaid / totalYears;
-    const totalInterestPaidForMonth = totalInterestPaidForYear / 12;
-
-    let remainingBalance = principalAmount;
-    let month = 0;
-
-    while (remainingBalance > 0) {
-      remainingBalance = remainingBalance * (1 + monthlyInterestRate) - totalMonthlyPayment;
-      if (remainingBalance > 0) {
-        month++;
+    if(principalAmount) {
+      const annualInterestRate = parseFloat(interestRate)/100;
+      const totalYears = parseFloat(years);
+      const extraMonthlyPayment = parseFloat(extraPayment) || 0.00;
+  
+      const monthlyInterestRate = annualInterestRate / 12;
+      const totalPayments = totalYears * 12;
+  
+      const monthlyPayment =
+        (principalAmount * monthlyInterestRate) /
+        (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+  
+      const totalMonthlyPayment = monthlyPayment + extraMonthlyPayment;
+  
+      const totalInterestPaid = monthlyPayment * totalPayments - principalAmount;
+      const totalInterestPaidForYear = totalInterestPaid / totalYears;
+      const totalInterestPaidForMonth = totalInterestPaidForYear / 12;
+  
+      let remainingBalance = principalAmount;
+      let month = 0;
+  
+      while (remainingBalance > 0) {
+        remainingBalance = remainingBalance * (1 + monthlyInterestRate) - totalMonthlyPayment;
+        if (remainingBalance > 0) {
+          month++;
+        }
       }
+  
+      if(remainingBalance<0){
+        remainingBalance =0;
+      }
+  
+      const remainingYears = (month / 12).toFixed(1);
+      const totalInterestSavedWithExtraMoney = totalInterestPaidForYear * (totalYears - remainingYears);
+      const totalInterestPaidWithExtraMoney = totalInterestPaid - totalInterestSavedWithExtraMoney;
+      const totalInterestPaidForYearWithExtraMoney = totalInterestPaidWithExtraMoney / totalYears;
+      const totalInterestPaidForMonthWithExtraMoney = totalInterestPaidForYearWithExtraMoney / 12;
+  
+      // Set results with data
+      setResults({
+        monthlyPayment: monthlyPayment.toFixed(2),
+        totalMonthlyPayment: totalMonthlyPayment.toFixed(2),
+        remainingYears,
+        totalInterestPaid: totalInterestPaid.toFixed(2),
+        totalInterestPaidForYear: totalInterestPaidForYear.toFixed(2),
+        totalInterestPaidForMonth: totalInterestPaidForMonth.toFixed(2),
+        totalInterestPaidWithExtraPayment: totalInterestPaidWithExtraMoney.toFixed(2),
+        totalInterestPaidForYearWithExtraPayment: totalInterestPaidForYearWithExtraMoney.toFixed(2),
+        totalInterestPaidForMonthWithExtraPayment: totalInterestPaidForMonthWithExtraMoney.toFixed(2),
+        annualRate:annualInterestRate,
+        extraMonthlyPayment
+      });
     }
-
-    if(remainingBalance<0){
-      remainingBalance =0;
-    }
-
-    const remainingYears = (month / 12).toFixed(1);
-    const totalInterestSavedWithExtraMoney = totalInterestPaidForYear * (totalYears - remainingYears);
-    const totalInterestPaidWithExtraMoney = totalInterestPaid - totalInterestSavedWithExtraMoney;
-    const totalInterestPaidForYearWithExtraMoney = totalInterestPaidWithExtraMoney / totalYears;
-    const totalInterestPaidForMonthWithExtraMoney = totalInterestPaidForYearWithExtraMoney / 12;
-
-    // Set results with data
-    setResults({
-      monthlyPayment: monthlyPayment.toFixed(2),
-      totalMonthlyPayment: totalMonthlyPayment.toFixed(2),
-      remainingYears,
-      totalInterestPaid: totalInterestPaid.toFixed(2),
-      totalInterestPaidForYear: totalInterestPaidForYear.toFixed(2),
-      totalInterestPaidForMonth: totalInterestPaidForMonth.toFixed(2),
-      totalInterestPaidWithExtraPayment: totalInterestPaidWithExtraMoney.toFixed(2),
-      totalInterestPaidForYearWithExtraPayment: totalInterestPaidForYearWithExtraMoney.toFixed(2),
-      totalInterestPaidForMonthWithExtraPayment: totalInterestPaidForMonthWithExtraMoney.toFixed(2),
-      annualRate:annualInterestRate,
-      extraMonthlyPayment
-    });
+   
   };
 
   return (

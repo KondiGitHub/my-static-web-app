@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PhotoGallery from './components/PhotoGallery';
+import ServerTest from './products/ServerTest';
 
 const Products = withRouter(
   lazy(() => import(/* webpackChunkName: "products" */ './products/Products'))
@@ -35,6 +36,7 @@ class App extends Component {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/photo-galary" component={PhotoGallery} />
+                <Route exact path="/serverTest" component={ServerTest} />
                 <Route exact path="**" component={NotFound} />
               </Switch>
             </Suspense>

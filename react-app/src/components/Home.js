@@ -26,6 +26,11 @@ const Home = (props) => (
           Loan Calculator
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/serverTest" className="nav-link">
+          Server Test
+        </NavLink>
+      </li>
     </ul>
     {props.children}
   </nav>

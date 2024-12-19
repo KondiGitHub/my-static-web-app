@@ -31,6 +31,11 @@ const Home = (props) => (
           Server Test
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/AmmuArts" className="nav-link">
+          AmmuArts
+        </NavLink>
+      </li>
     </ul>
     {props.children}
   </nav>

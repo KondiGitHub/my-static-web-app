@@ -5,6 +5,8 @@ import { BlobServiceClient } from "@azure/storage-blob";
 
 function Flowers() {
     const [bouquets, setBouquets] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
    
    useEffect(() => {
       const fetchBouquets = async () => {
@@ -39,42 +41,82 @@ function Flowers() {
   
           setBouquets(blobs);
         } catch (error) {
+            setErrorMessage("Failed to fetch data. Please check your CORS settings or network connection.");
+        console.error("Error fetching bouquets:", error);
           console.error("Error fetching bouquets:", error);
         }
       };
   
       fetchBouquets();
     }, []);
+
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+      };
+    
+      const closeImageModal = () => {
+        setSelectedImage(null);
+      };
   
     return (
-      <div>
+        <div>
         <h1>Stock Cloth Flowers for Sale</h1>
         <p>Choose from a wide variety of beautiful cloth flower bouquets!</p>
-        <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-          {bouquets.map((bouquet) => (
-            <div
-              key={bouquet.id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                borderRadius: "5px",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={bouquet.image}
-                alt={bouquet.name}
+        {errorMessage ? (
+          <p style={{ color: "red" }}>{errorMessage}</p>
+        ) : (
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+            {bouquets.map((bouquet) => (
+              <div
+                key={bouquet.id}
                 style={{
-                  width: "150px",
-                  height: "150px",
-                  objectFit: "cover",
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  textAlign: "center",
                 }}
-              />
-              <h3>{bouquet.name}</h3>
-              <p>{bouquet.price}</p>
-            </div>
-          ))}
-        </div>
+              >
+                <img
+                  src={bouquet.image}
+                  alt={bouquet.name}
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleImageClick(bouquet.image)}
+                />
+                <h3>{bouquet.name}</h3>
+                <p>{bouquet.price}</p>
+              </div>
+            ))}
+          </div>
+        )}
+  
+        {selectedImage && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={closeImageModal}
+          >
+            <img
+              src={selectedImage}
+              alt="Selected"
+              style={{ maxWidth: "90%", maxHeight: "90%" }}
+            />
+          </div>
+        )}
+  
         <div style={{ marginTop: "20px" }}>
           <Link to="/login" style={{ marginRight: "10px" }}>
             Login

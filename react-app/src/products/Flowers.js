@@ -9,9 +9,12 @@ function Flowers() {
    useEffect(() => {
       const fetchBouquets = async () => {
         try {
-           const endpoint = `${process.env.REACT_APP_BLOB_STORAGE_URL}/?${process.env.STORAGE_SAS_TOKEN}`;
+             const STORAGE_ACCOUNT='https://mailaramstorage.blob.core.windows.net'
+            const SAS_TOKEN='sv=2022-11-02&ss=bfqt&srt=sco&sp=rwlacupiytfx&se=2024-12-29T12%3A16%3A10Z&st=2024-12-19T04%3A16%3A10Z&spr=https&sig=6aawNzPF9eJlBsAKABgeiy6Du8PitzYmHwWIvbPoemI%3D'
+           const endpoint = `${STORAGE_ACCOUNT}/?${SAS_TOKEN}`;
+           const STORAGE_CONTAINER_NAME = "ammuluarts"
           const blobServiceClient = new BlobServiceClient(endpoint);
-          const containerClient = blobServiceClient.getContainerClient(process.env.STORAGE_CONTAINER_NAME);
+          const containerClient = blobServiceClient.getContainerClient(STORAGE_CONTAINER_NAME);
           const blobs = [];
 
           const url = `${containerClient.url}`;
@@ -21,9 +24,9 @@ function Flowers() {
           // Parse the response and populate bouquets (response processing depends on actual Azure response format)
       for await (const blob of containerClient.listBlobsFlat()) {
         console.log(SAS_TOKEN)
-        let sas = process.env.STORAGE_SAS_TOKEN.replace(/:/g, "%3A")
+        let sas = SAS_TOKEN.replace(/:/g, "%3A")
         console.log(sas)
-        const blobUrl = `${process.env.REACT_APP_BLOB_STORAGE_URL}/${process.env.STORAGE_CONTAINER_NAME}/${blob.name}?${sas}`;
+        const blobUrl = `${STORAGE_ACCOUNT}/${STORAGE_CONTAINER_NAME}/${blob.name}?${sas}`;
         console.log(blobUrl)
        
         blobs.push({

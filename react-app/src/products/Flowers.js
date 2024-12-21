@@ -1,12 +1,19 @@
-import React from "react";
+import React,{ useContext } from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { CartContext } from '../CartContext';
+import './Flower.css'
 import axios from 'axios'; // If you're using axios
 
 function Flowers() {
     const [bouquets, setBouquets] = useState([]);
     const [errorMessage, setErrorMessage] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const { addToCart,cartCount } = useContext(CartContext);
+
+    const handleAddToCart = (bouquet) => {
+      addToCart(bouquet);
+  };
 
     useEffect(() => {
         const fetchBouquets = async () => {
@@ -56,6 +63,7 @@ function Flowers() {
           }}
         >
           <h1 style={{ margin: 0 }}>Stock Cloth Flowers for Sale</h1>
+          <Link to="/cart">Go to Cart ({cartCount})</Link>
         </header>
         <p style={{ margin: "20px 0", padding: "10px", fontSize: "18px" }}>
           Choose from a wide variety of beautiful cloth flower bouquets!
@@ -97,9 +105,13 @@ function Flowers() {
                     cursor: "pointer",
                   }}
                   onClick={() => handleImageClick(bouquet.src)}
+                  
                 />
                 <h3>{bouquet.title}</h3>
                 <p>{bouquet.price}</p>
+                <button onClick={() => handleAddToCart(bouquet)}
+                   className="add-to-cart-btn"
+                  >Add to Cart</button>
               </div>
             ))}
           </div>

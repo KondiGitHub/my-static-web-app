@@ -15,7 +15,7 @@ import ServerTest from './products/ServerTest';
 import Flowers from './products/Flowers';
 import Payment from './components/Payment';
 import Completion from './components/Completion';
-import axios from 'axios'; // If you're using axios
+import Cart from './components/Cart';
 
 const Products = withRouter(
   lazy(() => import(/* webpackChunkName: "products" */ './products/Products'))
@@ -52,6 +52,7 @@ class App extends Component {
                 <Route exact path="/AmmuArts" component={Flowers} />
                 <Route exact path="/payment" component={Payment} />
                 <Route exact path="/completion" component={Completion} />
+                <Route exact path="/cart" component={Cart} />
                 
                 <Route exact path="**" component={NotFound} />
               </Switch>

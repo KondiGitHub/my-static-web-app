@@ -10,7 +10,7 @@ function Flowers() {
 
     useEffect(() => {
         const fetchBouquets = async () => {
-                axios.get('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/flowers')
+                axios.get('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/flowers')
                 .then(response => {
                   setBouquets(response.data);
                 })

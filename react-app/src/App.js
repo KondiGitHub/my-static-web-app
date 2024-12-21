@@ -13,12 +13,23 @@ import Login from './components/Login';
 import PhotoGallery from './components/PhotoGallery';
 import ServerTest from './products/ServerTest';
 import Flowers from './products/Flowers';
+import Payment from './components/Payment';
+import Completion from './components/Completion';
+import axios from 'axios'; // If you're using axios
 
 const Products = withRouter(
   lazy(() => import(/* webpackChunkName: "products" */ './products/Products'))
 );
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      stripePromise: '',
+    };
+  }
+
   render() {
     return (
       <div>
@@ -39,6 +50,9 @@ class App extends Component {
                 <Route exact path="/photo-galary" component={PhotoGallery} />
                 <Route exact path="/serverTest" component={ServerTest} />
                 <Route exact path="/AmmuArts" component={Flowers} />
+                <Route exact path="/payment" component={Payment} />
+                <Route exact path="/completion" component={Completion} />
+                
                 <Route exact path="**" component={NotFound} />
               </Switch>
             </Suspense>

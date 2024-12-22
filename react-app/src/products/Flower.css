@@ -1,18 +1,103 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 90%;
+  background-color: #add8e6;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the title horizontally */
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.header-h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center; /* Ensure text alignment is centered */
+  flex-grow: 1; /* Allow the title to occupy available space */
+}
+
+.flower-body {
+  position: relative;
+  padding-top: 70px; /* Ensure this matches or exceeds the header height */
+  background: #fefbd8;
+  min-height: 100vh;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.header-p {
+  margin: 20px 0;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.header-buttons {
+  position: absolute;
+  top: 10px;
+  right: 20px; /* Place buttons in the top-right corner */
+  display: flex;
+  gap: 10px; /* Reduce spacing between buttons */
+}
+
+.header-buttons a {
+  text-decoration: none;
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px; /* Reduce button padding */
+  border-radius: 5px;
+  font-size: 12px; /* Reduce font size */
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.header-buttons a:hover {
+  background-color: #45a049;
+}
+
+.flower {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 90px);
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.flower-image {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.flower-image-src {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 .add-to-cart-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 0;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .add-to-cart-btn:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
-  }
-  
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #45a049;
+}
+
+.err-msg {
+  color: red;
+  font-weight: bold;
+}

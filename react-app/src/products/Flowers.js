@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { CartContext } from '../CartContext';
 import './Flower.css'
 import axios from 'axios'; // If you're using axios
+import { UserContext } from '../UserContext';
 
 function Flowers() {
   const [bouquets, setBouquets] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const { addToCart, cartCount } = useContext(CartContext);
+  const { user } = useContext(UserContext); // Access context
+  
 
   const handleAddToCart = (bouquet) => {
     addToCart(bouquet);
@@ -39,13 +42,12 @@ function Flowers() {
   };
 
   return (
-    <div className="flower-body"
-    >
+    <div className="flower-body">
       <header className="header">
         <h1 className="header-h1">Stock Cloth Flowers for Sale</h1>
         <div className="header-buttons">
           <Link to="/signup">Sign Up</Link>
-          <Link to="/login">Sign In</Link>
+          {user ? <span>Welcome, {user.name}!</span> : <Link to="/login">Sign In</Link>}
           <Link to="/cart">Cart ({cartCount})</Link>
         </div>
       </header>

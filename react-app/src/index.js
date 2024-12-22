@@ -9,6 +9,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import app, { productSaga } from './store';
 import { CartProvider } from './CartContext';
+import { UserProvider } from './UserContext';
 
 // create and configure reduxer middleware ( saga is a middleware )
 const sagaMiddleware = createSagaMiddleware();
@@ -33,11 +34,13 @@ sagaMiddleware.run(productSaga);
 
 ReactDOM.render(
   <Provider store={store}>
+    <UserProvider>
     <CartProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </CartProvider>
+    </UserProvider>
   </Provider>,
   document.getElementById('root')
 );

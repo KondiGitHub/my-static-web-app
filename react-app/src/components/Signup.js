@@ -32,7 +32,7 @@ function Signup() {
    
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/signup',
+        'https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/signup',
         formData,
         {
           headers: {

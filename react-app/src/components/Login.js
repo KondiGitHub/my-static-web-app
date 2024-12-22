@@ -1,18 +1,44 @@
-// src/pages/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../UserContext';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios'; // If you're using axios
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const { setUser } = useContext(UserContext); // Access context
+  const history = useHistory(); // Use useHistory instead of useNavigate
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Add login functionality here
-    console.log('Logged in with:', { email, password });
+
+    try {
+      // Make an API call to validate credentials
+      const response = await axios.post('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/login', {
+        email,
+        password,
+      });
+
+      // If login is successful, set user and navigate
+      if (response.status === 200) {
+        const { user } = response.data; // Assume API returns user data in `data.user`
+        setUser(user); // Update context with user details
+        history.push("/AmmuArts"); // Navigate to another page
+      }
+    } catch (error) {
+      // Handle errors (e.g., invalid credentials or server issues)
+      if (error.response) {
+        setErrorMessage(error.response.data.message || 'Invalid credentials');
+      } else {
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      }
+    }
   };
 
   return (
     <div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -33,7 +59,7 @@ function Login() {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" style={{ "background-color": "green" }}>Login</button>
       </form>
     </div>
   );

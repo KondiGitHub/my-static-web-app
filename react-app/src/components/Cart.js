@@ -41,7 +41,7 @@ function Cart() {
           <div className="cart-summary">
             <h2>Total: ${totalPrice.toFixed(2)}</h2>
             <button onClick={clearCart}>Clear Cart</button>
-            <Link to="/payment">Go to Payment</Link>
+            <Link to="/payment">Purchase</Link>
           </div>
         )}
       </div>

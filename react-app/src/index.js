@@ -10,9 +10,14 @@ import * as serviceWorker from './serviceWorker';
 import app, { productSaga } from './store';
 import { CartProvider } from './CartContext';
 import { UserProvider } from './UserContext';
+import { ConfigProvider } from './ConfigContext';
 
 // create and configure reduxer middleware ( saga is a middleware )
 const sagaMiddleware = createSagaMiddleware();
+
+const customConfig = {
+  NODE_SERVICE: process.env.REACT_APP_NODE_SERVICE
+};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -22,25 +27,18 @@ const store = createStore(
 
 sagaMiddleware.run(productSaga);
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </Provider>,
-
-//   document.getElementById('root')
-// );
-
 ReactDOM.render(
   <Provider store={store}>
-    <UserProvider>
-    <CartProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CartProvider>
-    </UserProvider>
+    <ConfigProvider config={customConfig}>
+      <UserProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CartProvider>
+      </UserProvider>
+    </ConfigProvider>
+
   </Provider>,
   document.getElementById('root')
 );

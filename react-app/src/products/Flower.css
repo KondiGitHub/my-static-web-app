@@ -1,103 +1,59 @@
-.header {
+.flower-body {
+  max-height: 100vh; /* Ensures the container doesn't exceed the viewport height */
+  overflow-y: auto; /* Adds a vertical scrollbar when content overflows */
+  padding: 20px; /* Optional: Adds spacing inside the container */
+  box-sizing: border-box; /* Ensures padding is included in height calculation */
+  background-color: #fff; /* Optional: Background color */
+}
+
+.image-pop-up {
   position: fixed;
   top: 0;
-  width: 90%;
-  background-color: #add8e6;
-  border-bottom: 1px solid #ddd;
-  z-index: 1000;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: center; /* Center the title horizontally */
-  padding: 10px 20px;
-  box-sizing: border-box;
-}
-
-.header-h1 {
-  margin: 0;
-  font-size: 24px;
-  text-align: center; /* Ensure text alignment is centered */
-  flex-grow: 1; /* Allow the title to occupy available space */
-}
-
-.flower-body {
-  position: relative;
-  padding-top: 70px; /* Ensure this matches or exceeds the header height */
-  background: #fefbd8;
-  min-height: 100vh;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.header-p {
-  margin: 20px 0;
-  padding: 10px;
-  font-size: 18px;
-}
-
-.header-buttons {
-  position: absolute;
-  top: 10px;
-  right: 20px; /* Place buttons in the top-right corner */
-  display: flex;
-  gap: 10px; /* Reduce spacing between buttons */
-}
-
-.header-buttons a {
-  text-decoration: none;
-  background-color: #4caf50;
-  color: white;
-  padding: 5px 10px; /* Reduce button padding */
-  border-radius: 5px;
-  font-size: 12px; /* Reduce font size */
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.header-buttons a:hover {
-  background-color: #45a049;
+  z-index: 2000;
 }
 
 .flower {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-  overflow-y: auto;
-  max-height: calc(100vh - 90px);
-  padding: 10px 20px;
-  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 20px; /* Space between grid items */
+  padding: 10px;
 }
 
 .flower-image {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: #fff;
+  display: flex;
+  flex-direction: column; /* Stack image and text */
+  align-items: center; /* Center-align items */
+  background-color: #f9f9f9; /* Optional: background color */
+  border: 1px solid #ddd; /* Optional: border */
+  border-radius: 10px; /* Optional: rounded corners */
+  overflow: hidden; /* Ensure content stays inside bounds */
+  padding: 5px;
 }
 
 .flower-image-src {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  cursor: pointer;
+  width: 100%; /* Make images fill the grid cell */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Optional: rounded corners for images */
 }
 
 .add-to-cart-btn {
-  background-color: #4caf50;
+  /* margin-top: 0px;
+  padding: 10px 20px; */
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 15px;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #45a049;
-}
-
-.err-msg {
-  color: red;
-  font-weight: bold;
+  background-color: #0056b3; /* Darker shade on hover */
 }

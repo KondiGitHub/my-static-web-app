@@ -3,6 +3,7 @@ import { CartContext } from '../CartContext';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import './Cart.css';
+import Header from "../components/Header";
 
 function Cart() {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
@@ -12,20 +13,8 @@ function Cart() {
 
   return (
     <div className="flower-body">
-      <header className="header">
-        <h1 className="header-h1">Shopping Cart</h1>
-        <div className="header-buttons">
-          {/* Display "Sign Up" link if user is not logged in */}
-          {!user && <Link to="/signup">Sign Up</Link>}
-
-          {/* Display welcome message or "Sign In" link based on user status */}
-          {user ? (
-            <span>Welcome, {user.name}!</span>
-          ) : (
-            <Link to="/login">Sign In</Link>
-          )}
-        </div>
-      </header>
+     
+      <Header title="Shopping Cart"  showCart={false}/>
 
       {/* Main Content */}
       <div className="main-content">

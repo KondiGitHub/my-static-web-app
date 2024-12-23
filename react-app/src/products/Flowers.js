@@ -5,6 +5,8 @@ import { CartContext } from '../CartContext';
 import './Flower.css'
 import axios from 'axios'; // If you're using axios
 import { UserContext } from '../UserContext';
+import { ConfigContext } from '../ConfigContext';
+import Header from "../components/Header";
 
 function Flowers() {
   const [bouquets, setBouquets] = useState([]);
@@ -12,6 +14,7 @@ function Flowers() {
   const [selectedImage, setSelectedImage] = useState(null);
   const { addToCart, cartCount } = useContext(CartContext);
   const { user } = useContext(UserContext); // Access context
+  const config = useContext(ConfigContext);
   
 
   const handleAddToCart = (bouquet) => {
@@ -20,7 +23,8 @@ function Flowers() {
 
   useEffect(() => {
     const fetchBouquets = async () => {
-      axios.get('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/flowers')
+      axios.get(
+        `${config.NODE_SERVICE}/api/flowers`)
         .then(response => {
           setBouquets(response.data);
         })
@@ -43,17 +47,10 @@ function Flowers() {
 
   return (
     <div className="flower-body">
-      <header className="header">
-        <h1 className="header-h1">Stock Cloth Flowers for Sale</h1>
-        <div className="header-buttons">
-          <Link to="/signup">Sign Up</Link>
-          {user ? <span>Welcome, {user.name}!</span> : <Link to="/login">Sign In</Link>}
-          <Link to="/cart">Cart ({cartCount})</Link>
-        </div>
-      </header>
-      <p className="header-p">
+       <Header title="Stocking Cloth Flowers for Sale" />
+      <h1>
         Choose from a wide variety of beautiful cloth flower bouquets!
-      </p>
+      </h1>
       {errorMessage ? (
         <p className="err-msg">{errorMessage}</p>
       ) : (
@@ -81,19 +78,7 @@ function Flowers() {
       )}
 
       {selectedImage && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 2000,
-          }}
+        <div className="image-pop-up"
           onClick={closeImageModal}
         >
           <img

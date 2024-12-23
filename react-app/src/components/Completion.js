@@ -1,14 +1,17 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import axios from 'axios'; // If you're using axios
 import { loadStripe } from "@stripe/stripe-js";
+import { ConfigContext } from '../ConfigContext';
 
 function Completion() {
   const [ messageBody, setMessageBody ] = useState('');
+  const config = useContext(ConfigContext);
 
   useEffect(() => {
 
     const getPubKey = async () => {
-        const res = await axios.get('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/config');
+        const res = await axios.get(
+          `${config.NODE_SERVICE}/api/config`);
         const { publishableKey } = res.data;
         const stripePromise = loadStripe(publishableKey);
         stripePromise.then(async (stripe) => {

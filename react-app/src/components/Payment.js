@@ -5,6 +5,7 @@ import CheckoutForm from "./CheckoutForm";
 import { useEffect, useState } from "react";
 import axios from 'axios'; // If you're using axios
 import { CartContext } from '../CartContext';
+import { ConfigContext } from '../ConfigContext';
 
 function Payment() {
 
@@ -14,6 +15,7 @@ function Payment() {
   const [ clientSecret, setClientSecret ] = useState('');
   const [ stripePromise, setStripePromise ] = useState('');
   const [data, setData] = useState(null);
+   const config = useContext(ConfigContext);
   const [dataToSend, setDataToSend] = useState({
     orderAmount: totalPrice
   });
@@ -22,7 +24,8 @@ function Payment() {
   useEffect(() => {
 
     const getPubKey = async () => {
-      const res = await axios.get('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/config');
+      const res = await axios.get(
+        `${config.NODE_SERVICE}/api/config`);
       const { publishableKey } = res.data;
       const stripePromiseTemp = loadStripe(publishableKey);
       setStripePromise(stripePromiseTemp);
@@ -32,7 +35,7 @@ function Payment() {
     const postData = async () => {
       try {
         const res = await axios.post(
-          "https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/create-payment-intent",
+          `${config.NODE_SERVICE}/api/create-payment-intent`,
           dataToSend
         );
         const { clientSecret } = res.data;

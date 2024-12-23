@@ -9,63 +9,6 @@
   background-color: #f9f9f9;
 }
 
-/* Header Styling */
-.header {
-  /* background-color: #333; */
-  color: white;
-  /* padding: 20px; */
-  width: 100%;
-  text-align: center;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for visibility */
-}
-
-/* Header Title */
-.header-h1 {
-  margin: 0;
-  font-size: 2rem; /* Increase font size for visibility */
-  font-weight: 600;
-  color: #fff; /* Ensure text is white */
-}
-
-/* Header Buttons */
-.header-buttons {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.header-buttons a, .header-buttons span {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.header-buttons a:hover {
-  background-color: #444;
-}
-
-.header-buttons span {
-  background-color: #4CAF50;
-  padding: 8px 15px;
-  border-radius: 3px;
-}
-
-.header-buttons a:last-child {
-  background-color: #2196F3;
-  padding: 8px 15px;
-  border-radius: 3px;
-}
 
 /* Main Content */
 .main-content {

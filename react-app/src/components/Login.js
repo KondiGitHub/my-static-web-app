@@ -3,19 +3,23 @@ import { UserContext } from '../UserContext';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'; // If you're using axios
 
+import { ConfigContext } from '../ConfigContext';
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { setUser } = useContext(UserContext); // Access context
   const history = useHistory(); // Use useHistory instead of useNavigate
+  const config = useContext(ConfigContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       // Make an API call to validate credentials
-      const response = await axios.post('https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/login', {
+      const response = await axios.post(
+        `${config.NODE_SERVICE}/api/login`,{
         email,
         password,
       });

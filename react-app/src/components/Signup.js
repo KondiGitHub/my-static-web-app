@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import './Signup.css';
 import axios from 'axios'; // If you're using axios
+import { ConfigContext } from '../ConfigContext';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function Signup() {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const history = useHistory(); // Use useHistory instead of useNavigate
+  const config = useContext(ConfigContext);
 
   const handleInputChange =  (e) => {
     const { name, value } = e.target;
@@ -29,10 +31,12 @@ function Signup() {
       setErrorMessage("All fields are required!");
       return;
     }
+
+    console.log("defaultConfig",JSON.stringify(config));
    
     try {
       const response = await axios.post(
-        'https://samplenode-dxa9fdevhecvcbez.eastus2-01.azurewebsites.net/api/signup',
+        `${config.NODE_SERVICE}/api/signup`,
         formData,
         {
           headers: {

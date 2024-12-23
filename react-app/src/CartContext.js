@@ -13,6 +13,7 @@ export const CartProvider = ({ children }) => {
 
     const removeFromCart = (id) => {
         setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+        setCartCount(cartCount - 1); // Increment item count
     };
 
     const updateQuantity = (id, quantity) => {

@@ -12,19 +12,30 @@ function Flowers() {
   const [bouquets, setBouquets] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { addToCart, cartCount } = useContext(CartContext);
+  const { addToCart, cartCount,removeFromCart } = useContext(CartContext);
   const { user } = useContext(UserContext); // Access context
   const config = useContext(ConfigContext);
+  const [addedToCart, setAddedToCart] = useState(false);
+
+
+  const [addedBouquets, setAddedBouquets] = useState([]);
   
 
   const handleAddToCart = (bouquet) => {
-    addToCart(bouquet);
+   
+    if (addedBouquets.includes(bouquet._id)) {
+      setAddedBouquets(addedBouquets.filter(id => id !== bouquet._id)); // Remove bouquet from the cart
+      removeFromCart(bouquet._id);
+    } else {
+      setAddedBouquets([...addedBouquets, bouquet._id]); // Add bouquet to the cart
+      addToCart(bouquet);
+    }
   };
 
   useEffect(() => {
     const fetchBouquets = async () => {
       axios.get(
-        `${config.NODE_SERVICE}/api/flowers`)
+        `${config.NODE_SERVICE}/api/products`)
         .then(response => {
           setBouquets(response.data);
         })
@@ -70,8 +81,8 @@ function Flowers() {
               <h3>{bouquet.title}</h3>
               <p>{bouquet.price}</p>
               <button onClick={() => handleAddToCart(bouquet)}
-                className="add-to-cart-btn"
-              >Add to Cart</button>
+                className={`add-to-cart-btn ${addedBouquets.includes(bouquet._id) ? 'added-to-cart' : 'add-to-cart'}`}
+              >{addedBouquets.includes(bouquet._id) ? 'Remove from cart' : 'Add to Cart'} </button>
             </div>
           ))}
         </div>

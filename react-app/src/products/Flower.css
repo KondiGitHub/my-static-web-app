@@ -47,7 +47,6 @@
   /* margin-top: 0px;
   padding: 10px 20px; */
   background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -56,4 +55,11 @@
 
 .add-to-cart-btn:hover {
   background-color: #0056b3; /* Darker shade on hover */
+}
+.added-to-cart {
+  color: green; /* Green text for "Added to Cart" */
+}
+
+.add-to-cart {
+  color: blue; /* Blue text for "Add to Cart" */
 }

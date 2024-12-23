@@ -1,10 +1,10 @@
 import {
   PaymentElement,
   LinkAuthenticationElement
-} from '@stripe/react-stripe-js'
-import {useState} from 'react'
-import {useStripe, useElements} from '@stripe/react-stripe-js';
-import './CheckoutForm.css'
+} from '@stripe/react-stripe-js';
+import { useState } from 'react';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
+import './CheckoutForm.css';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -12,12 +12,28 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // State for address form
+  const [address, setAddress] = useState({
+    name: '',
+    street: '',
+    city: '',
+    postalCode: '',
+    country: ''
+  });
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddress((prevAddress) => ({
+      ...prevAddress,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -31,31 +47,84 @@ export default function CheckoutForm() {
       },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
-      setMessage("An unexpected error occured.");
+      setMessage("An unexpected error occurred.");
     }
 
     setIsLoading(false);
-  }
+  };
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <LinkAuthenticationElement id="link-authentication-element"
-        // Access the email value like so:
-        // onChange={(event) => {
-        //  setEmail(event.value.email);
-        // }}
-        //
-        // Prefill the email field like so:
-        // options={{defaultValues: {email: 'foo@bar.com'}}}
-        />
+      {/* Address Form Fields */}
+      <div className="address-fields">
+        <h3>Shipping Address</h3>
+        <div className="form-group">
+          <label htmlFor="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={address.name}
+            onChange={handleAddressChange}
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="street">Street Address</label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            value={address.street}
+            onChange={handleAddressChange}
+            placeholder="Enter your street address"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={address.city}
+            onChange={handleAddressChange}
+            placeholder="Enter your city"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="postalCode">Postal Code</label>
+          <input
+            type="text"
+            id="postalCode"
+            name="postalCode"
+            value={address.postalCode}
+            onChange={handleAddressChange}
+            placeholder="Enter your postal code"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="country">Country</label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            value={address.country}
+            onChange={handleAddressChange}
+            placeholder="Enter your country"
+            required
+          />
+        </div>
+      </div>
+
+      {/* Payment Form */}
+      <LinkAuthenticationElement id="link-authentication-element" />
       <PaymentElement id="payment-element" />
       <button disabled={isLoading || !stripe || !elements} id="submit" className="pay-now">
         <span id="button-text">
@@ -65,5 +134,5 @@ export default function CheckoutForm() {
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
-  )
+  );
 }

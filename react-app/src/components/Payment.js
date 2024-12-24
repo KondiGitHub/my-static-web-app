@@ -17,8 +17,9 @@ function Payment() {
   const [data, setData] = useState(null);
    const config = useContext(ConfigContext);
   const [dataToSend, setDataToSend] = useState({
-    orderAmount: totalPrice
+    orderAmount: totalPrice*100  // convert into cents
   });
+  const [ orderNumber, setOrderNumber ] = useState('');
   
 
   useEffect(() => {
@@ -30,10 +31,43 @@ function Payment() {
       const stripePromiseTemp = loadStripe(publishableKey);
       setStripePromise(stripePromiseTemp);
     }
+
+    const sendOrder =  async () => {
+      try {
+
+        const jsonPayload = {
+          items: cart.map(item => ({
+            id: item._id,
+            price: item.price,
+            tag: item.tag
+          }))
+        };
+
+        console.log(jsonPayload);
+        const orderResponse = await axios.post(
+          `${config.NODE_SERVICE}/api/order`, {
+            items: cart.map(item => ({
+              id: item._id,
+              price: item.price,
+              tag: item.tag
+            })),
+            totalPrice
+          }
+        );
+
+        const { orderNumber } = orderResponse.data;
+        console.log("orderNumber",orderNumber);
+        setOrderNumber(orderNumber);
+      } catch (err) {
+        setErrorMessage(err.message); // Handle errors
+        setData("done");
+      }
+    }
    
 
     const postData = async () => {
       try {
+        
         const res = await axios.post(
           `${config.NODE_SERVICE}/api/create-payment-intent`,
           dataToSend
@@ -43,10 +77,12 @@ function Payment() {
         setData("done");
       } catch (err) {
         setErrorMessage(err.message); // Handle errors
+        setData("done");
       }
     };
 
     getPubKey();
+    sendOrder();
     postData();
   }, [dataToSend]);
 
@@ -62,7 +98,8 @@ function Payment() {
             <div>
               <h2>Payment</h2>
               <h4>orderAmount: ${totalPrice}</h4>
-              <CheckoutForm />
+              <h4>orderNumber: {orderNumber}</h4>
+              <CheckoutForm orderNumber={orderNumber}/>
             </div>
           </Elements>
           )

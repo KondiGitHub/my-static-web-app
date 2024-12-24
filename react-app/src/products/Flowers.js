@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CartContext } from '../CartContext';
 import './Flower.css'
 import axios from 'axios'; // If you're using axios
-import { UserContext } from '../UserContext';
 import { ConfigContext } from '../ConfigContext';
 import Header from "../components/Header";
 
@@ -13,9 +11,7 @@ function Flowers() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const { addToCart, cartCount,removeFromCart } = useContext(CartContext);
-  const { user } = useContext(UserContext); // Access context
   const config = useContext(ConfigContext);
-  const [addedToCart, setAddedToCart] = useState(false);
 
 
   const [addedBouquets, setAddedBouquets] = useState([]);

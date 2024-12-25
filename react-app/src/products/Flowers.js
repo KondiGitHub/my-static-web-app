@@ -10,7 +10,7 @@ function Flowers() {
   const [bouquets, setBouquets] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { addToCart, cartCount,removeFromCart } = useContext(CartContext);
+  const { addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
 
@@ -42,7 +42,7 @@ function Flowers() {
     };
 
     fetchBouquets();
-  }, []);
+  }, [config.NODE_SERVICE]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);

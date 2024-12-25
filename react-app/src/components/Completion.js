@@ -10,11 +10,11 @@ function Completion() {
   const location = useLocation();
 
   // Create a URLSearchParams object from the query string
-  const queryParams = new URLSearchParams(location.search);
+ 
 
 
   useEffect(() => {
-
+    const queryParams = new URLSearchParams(location.search);
   const updateOrder = async (error, paymentIntent) => {
   
     const orderNumber = queryParams.get('orderNumber');
@@ -46,7 +46,7 @@ function Completion() {
       
       getPubKey();
     
-  }, []);
+  }, [config.NODE_SERVICE,location]);
 
   return (
     <>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios'; // If you're using axios
 import { CartContext } from '../CartContext';
 import { ConfigContext } from '../ConfigContext';
+import Header from "./Header";
 
 function Payment() {
 
@@ -16,9 +17,6 @@ function Payment() {
   const [ stripePromise, setStripePromise ] = useState('');
   const [data, setData] = useState(null);
    const config = useContext(ConfigContext);
-  const [dataToSend, setDataToSend] = useState({
-    orderAmount: totalPrice*100  // convert into cents
-  });
   const [ orderNumber, setOrderNumber ] = useState('');
   
 
@@ -70,7 +68,7 @@ function Payment() {
         
         const res = await axios.post(
           `${config.NODE_SERVICE}/api/create-payment-intent`,
-          dataToSend
+          {orderAmount: totalPrice*100}
         );
         const { clientSecret } = res.data;
         setClientSecret(clientSecret);
@@ -84,7 +82,7 @@ function Payment() {
     getPubKey();
     sendOrder();
     postData();
-  }, [dataToSend]);
+  }, [cart, config.NODE_SERVICE,totalPrice]);
 
   if (!data) {
     return <div>Loading...</div>; // Show loading state until data is fetched
@@ -96,7 +94,7 @@ function Payment() {
         errorMessage ? (<p style={{ color: "red" }} > {errorMessage}</p >)
           : (<Elements stripe={stripePromise} options={{ clientSecret }}>
             <div>
-              <h2>Payment</h2>
+            < Header title={"Payment"} />
               <h4>orderAmount: ${totalPrice}</h4>
               <h4>orderNumber: {orderNumber}</h4>
               <CheckoutForm orderNumber={orderNumber}/>

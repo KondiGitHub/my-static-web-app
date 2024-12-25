@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { CartContext } from "../CartContext";
+import AccountProfilePage from './AccountProfilePage';
 import './Header.css'
 
 
@@ -14,7 +15,7 @@ function Header({ title, showCart = true }) {
       <h1 className="header-h1">{title}</h1> {/* Use the passed title prop */}
       <div className="header-buttons">
         <Link to="/signup">Sign Up</Link>
-        {user ? <span>Welcome, {user.name}!</span> : <Link to="/login">Sign In</Link>}
+        {user ? <AccountProfilePage /> : <Link to="/login">Sign In</Link>}
         {showCart && <Link to="/cart">Cart ({cartCount})</Link>} {/* Conditionally show cart */}
       </div>
     </header>

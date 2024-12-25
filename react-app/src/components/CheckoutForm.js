@@ -73,7 +73,7 @@ export default function CheckoutForm({ orderNumber }) {
   };
 
   const handleNameChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setFullName(value);
   };
   const handleEmailChange = (e) => {

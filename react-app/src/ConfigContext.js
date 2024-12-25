@@ -1,6 +1,6 @@
 // NODE_SERVICE=http://localhost:5000
 
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 
 // Create UserContext
 

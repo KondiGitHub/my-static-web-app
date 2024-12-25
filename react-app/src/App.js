@@ -1,10 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react';
-import 'bulma/css/bulma.css';
-import './styles.scss';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import { HeaderBar, NavBar, NotFound } from './components';
-import About from './About';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { NotFound } from './components';
 import MortgageCalculator from './products/MortgageCalculator';
 import MortagegeDetails from './products/MortagageDetails';
 import Home from './components/Home';
@@ -15,14 +11,21 @@ import ServerTest from './products/ServerTest';
 import Flowers from './products/Flowers';
 import Payment from './components/Payment';
 import Completion from './components/Completion';
+import AccountProfilePage from './components/AccountProfilePage';
+import PrivateRoute from './components/PrivateRoute';
 import Cart from './components/Cart';
+//import { UserContext } from './UserContext';
 
-const Products = withRouter(
-  lazy(() => import(/* webpackChunkName: "products" */ './products/Products'))
-);
+// Lazy-loaded component
+const Products = lazy(() => import(/* webpackChunkName: "products" */ './products/Products'));
+
+// PrivateRoute implementation for v6+
+// const PrivateRoute = ({ children }) => {
+//   const { user } = useContext(UserContext);
+//   return user ? children : <Navigate to="/login" />;
+// };
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -32,34 +35,40 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {/* <HeaderBar /> */}
-        <div className="section columns">
-          {/* <NavBar /> */}
-          <main className="column">
-            <Suspense fallback={<div>Loading...</div>}>
-              <Switch>
-                <Redirect from="/" exact to="/home" />
-                {/* <Route path="/products" component={Products} />
-                <Route path="/about" component={About} /> */}
-                 <Route exact path="/home" component={Home} />
-                <Route exact path="/loanCaluclator" component={MortgageCalculator} />
-                <Route exact path="/detailedLoan" component={ MortagegeDetails} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/photo-galary" component={PhotoGallery} />
-                <Route exact path="/serverTest" component={ServerTest} />
-                <Route exact path="/AmmuArts" component={Flowers} />
-                <Route exact path="/payment" component={Payment} />
-                <Route exact path="/completion" component={Completion} />
-                <Route exact path="/cart" component={Cart} />
-                
-                <Route exact path="**" component={NotFound} />
-              </Switch>
-            </Suspense>
-          </main>
+        <div>
+          {/* <HeaderBar /> */}
+          <div className="section columns">
+            {/* <NavBar /> */}
+            <main className="column">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                  <Route path="/" element={<Navigate to="/home" />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/loanCaluclator" element={<MortgageCalculator />} />
+                  <Route path="/detailedLoan" element={<MortagegeDetails />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/profile"
+                    element={
+                      <PrivateRoute>
+                        <AccountProfilePage />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route path="/photo-galary" element={<PhotoGallery />} />
+                  <Route path="/serverTest" element={<ServerTest />} />
+                  <Route path="/AmmuArts" element={<Flowers />} />
+                  <Route path="/payment" element={<Payment />} />
+                  <Route path="/completion" element={<Completion />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </main>
+          </div>
         </div>
-      </div>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 const NavBar = (props) => (
   <nav className="column is-2 menu">

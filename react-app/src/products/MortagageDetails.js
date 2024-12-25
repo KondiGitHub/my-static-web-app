@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Details.css';
 
 function MortagegeDetails() {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { principal, annualRate, years, monthlyPayment,extraMonthlyPayment } = location.state;
   const monthlyRate = annualRate/12;
@@ -41,7 +41,7 @@ function MortagegeDetails() {
     localStorage.setItem('principal', principal);
     localStorage.setItem('annualRate', annualRate);
     localStorage.setItem('years', years);
-    history.push('/loanCaluclator');
+    navigate('/loanCaluclator');
   };
 
   return (

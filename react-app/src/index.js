@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // Use react-dom/client in React 18
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -12,22 +12,18 @@ import { CartProvider } from './CartContext';
 import { UserProvider } from './UserContext';
 import { ConfigProvider } from './ConfigContext';
 
-// create and configure reduxer middleware ( saga is a middleware )
 const sagaMiddleware = createSagaMiddleware();
 
 const customConfig = {
-  NODE_SERVICE: process.env.REACT_APP_NODE_SERVICE
+  NODE_SERVICE: process.env.REACT_APP_NODE_SERVICE,
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  app,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
-);
+const store = createStore(app, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(productSaga);
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <ConfigProvider config={customConfig}>
       <UserProvider>
@@ -38,12 +34,7 @@ ReactDOM.render(
         </CartProvider>
       </UserProvider>
     </ConfigProvider>
-
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();

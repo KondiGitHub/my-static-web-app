@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../UserContext';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // If you're using axios
+import Header from "./Header";
 
 import { ConfigContext } from '../ConfigContext';
 
@@ -9,8 +10,8 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { setUser } = useContext(UserContext); // Access context
-  const history = useHistory(); // Use useHistory instead of useNavigate
+  const { login  } = useContext(UserContext); // Access context
+  const navigate = useNavigate(); // Use useHistory instead of useNavigate
   const config = useContext(ConfigContext);
 
   const handleLogin = async (e) => {
@@ -27,8 +28,10 @@ function Login() {
       // If login is successful, set user and navigate
       if (response.status === 200) {
         const { user } = response.data; // Assume API returns user data in `data.user`
-        setUser(user); // Update context with user details
-        history.push("/AmmuArts"); // Navigate to another page
+        login(user);
+        //setUser(user); // Update context with user details
+        //navigate(0);
+        navigate("/AmmuArts"); // Navigate to another page
       }
     } catch (error) {
       // Handle errors (e.g., invalid credentials or server issues)
@@ -43,7 +46,7 @@ function Login() {
   return (
     <div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <h2>Login</h2>
+      <Header title="Login"  showCart={false}/>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email: </label>

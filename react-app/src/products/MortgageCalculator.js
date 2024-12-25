@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../MortgageCalculator.css';
 
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState('');
   const [interestRate, setInterestRate] = useState('');
-  const [previousData, setPreviousData] = useState(null);
-
-  const [annualRate, setAnnualRate] = useState('');
   const [years, setYears] = useState('');
   const [extraPayment, setExtraPayment] = useState('');
-  const [monthlyPayment, setMonthlyPayment] = useState(null);
   const [results, setResults] = useState(null); // Initial state set to null
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const tempPrinciple= localStorage.getItem('principal');
@@ -35,7 +31,7 @@ const MortgageCalculator = () => {
   // Handle form submission and navigate to the details page
   const handleCalculate = (results) => {
     localStorage.setItem('previousData', {principal,annualRate: results.annualRate,years});
-    history.push('/detailedLoan', {
+    navigate('/detailedLoan', {
       principal,
       annualRate: results.annualRate,
       years,

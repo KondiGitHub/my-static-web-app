@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Signup.css';
 import axios from 'axios'; // If you're using axios
 import { ConfigContext } from '../ConfigContext';
@@ -14,7 +14,7 @@ function Signup() {
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const history = useHistory(); // Use useHistory instead of useNavigate
+   const navigate = useNavigate(); // Use useHistory instead of useNavigate
   const config = useContext(ConfigContext);
 
   const handleInputChange =  (e) => {
@@ -45,7 +45,7 @@ function Signup() {
         }
       );
       console.log("response:", JSON.stringify(response.data));
-      history.push("/AmmuArts"); // Navigate after successful submission
+      navigate("/AmmuArts"); // Navigate after successful submission
     } catch (error) {
       if (error.response) {
         // Server responded with a status code outside the 2xx range

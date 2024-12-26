@@ -14,6 +14,7 @@ import Completion from './components/Completion';
 import AccountProfilePage from './components/AccountProfilePage';
 import PrivateRoute from './components/PrivateRoute';
 import Cart from './components/Cart';
+import OrdersPage from './components/OrdersPage';
 //import { UserContext } from './UserContext';
 
 // Lazy-loaded component
@@ -63,6 +64,7 @@ class App extends Component {
                   <Route path="/completion" element={<Completion />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/products" element={<Products />} />
+                  <Route path="/orders" element={<OrdersPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

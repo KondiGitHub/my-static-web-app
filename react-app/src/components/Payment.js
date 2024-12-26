@@ -33,21 +33,15 @@ function Payment() {
     const sendOrder =  async () => {
       try {
 
-        const jsonPayload = {
-          items: cart.map(item => ({
-            id: item._id,
-            price: item.price,
-            tag: item.tag
-          }))
-        };
-
-        console.log(jsonPayload);
+       
         const orderResponse = await axios.post(
           `${config.NODE_SERVICE}/api/order`, {
             items: cart.map(item => ({
               id: item._id,
               price: item.price,
-              tag: item.tag
+              tag: item.tag,
+              src: item.src,
+              title: item.title
             })),
             totalPrice
           }

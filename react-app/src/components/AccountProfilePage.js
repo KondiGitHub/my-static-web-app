@@ -1,5 +1,6 @@
 import React,{useContext,useState } from 'react';
 import { UserContext } from '../UserContext';
+import { Link } from "react-router-dom";
 import './Profile.css'
 //import { useNavigate  } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ const AccountProfilePage = () => {
           <div className="profileBoxStyle">
             <p><strong>Name:</strong> {user.name}</p>
             <p><strong>Email:</strong> {user.email}</p>
+            <Link to="/orders">Orders</Link>
             {/* Add more user details if needed */}
             <button onClick={handleLogout} className="logoutButtonStyle">Logout</button>
           </div>

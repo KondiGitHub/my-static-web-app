@@ -1,21 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Home.css'; // Import your CSS file
+import Header from "./Header";
 
 const Home = (props) => (
-  <nav>
+  <div>
+    < Header title={"Payment Confirmation"} />
+ <nav>
     <h1>Welcome to Our App</h1>
     <ul>
-      <li>
-        <NavLink to="/login" className="nav-link">
-          Login
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/signup" className="nav-link">
-          Sign Up
-        </NavLink>
-      </li>
       <li>
         <NavLink to="/photo-galary" className="nav-link">
         Photo-galary
@@ -39,6 +32,8 @@ const Home = (props) => (
     </ul>
     {props.children}
   </nav>
+  </div>
+ 
 );
 
 export default Home;

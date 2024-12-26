@@ -6,6 +6,7 @@ import { useState,useContext } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import './CheckoutForm.css';
 import { USA_STATES } from '../constants/Constant';
+import { UserContext } from '../UserContext';
 
 import { ConfigContext } from '../ConfigContext';
 
@@ -35,6 +36,8 @@ export default function CheckoutForm({ orderNumber }) {
     email: '',
     phoneNumber: '',
   });
+
+  const { user  } = useContext(UserContext); // Access context
 
 
   // State for address form
@@ -132,9 +135,10 @@ export default function CheckoutForm({ orderNumber }) {
       const orderResponse = await axios.put(
         `${config.NODE_SERVICE}/api/order/${orderNumber}`, {
           shippingAddress: address,
-          customerName: fullName,
-          customerEmail: email,
-          customerPhoneNumber: formatPhoneNumber(phoneNumber),
+          name: fullName,
+          email: email,
+          userEmail: user ? user.email : 'Guest',
+          phoneNumber: formatPhoneNumber(phoneNumber),
           purchaseStatus: "purchase started"
         }
       );

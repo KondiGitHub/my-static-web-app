@@ -13,11 +13,31 @@ const OrdersPage = () => {
   const config = useContext(ConfigContext);
   const { user } = useContext(UserContext);
 
+  axios.interceptors.response.use(
+    response => response, // Pass through successful responses
+    error => {
+      if (error.response && error.response.status === 401) {
+        // Handle 401 status without throwing
+        console.warn('Session expired or unauthorized.');
+        return Promise.resolve({ status: 401, data: null });
+      }
+      return Promise.reject(error); // Throw other errors
+    }
+  );
+
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${config.NODE_SERVICE}/api/orders/?email=${user.email}`);
-        setOrders(response.data);
+        const response = await axios.get(`${config.NODE_SERVICE}/api/orders/?email=${user.email}`,{ withCredentials: true });
+        if (response.status === 401) {
+          console.warn("Unauthorized access");
+        } else if (response.data) {
+          console.log(response.data);
+          setOrders(response.data);
+        } else {
+          console.error("Session check failed: no session");
+        }
       } catch (err) {
         setError('Failed to fetch orders.');
       } finally {

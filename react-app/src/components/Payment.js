@@ -43,8 +43,8 @@ function Payment() {
               src: item.src,
               title: item.title
             })),
-            totalPrice
-          }
+            totalPrice,
+          },{ withCredentials: true }
         );
 
         const { orderNumber } = orderResponse.data;
@@ -62,7 +62,7 @@ function Payment() {
         
         const res = await axios.post(
           `${config.NODE_SERVICE}/api/create-payment-intent`,
-          {orderAmount: totalPrice*100}
+          {orderAmount: totalPrice*100},{ withCredentials: true }
         );
         const { clientSecret } = res.data;
         setClientSecret(clientSecret);

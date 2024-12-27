@@ -23,7 +23,7 @@ function Login() {
         `${config.NODE_SERVICE}/api/login`,{
         email,
         password,
-      });
+      },{ withCredentials: true });
 
       // If login is successful, set user and navigate
       if (response.status === 200) {

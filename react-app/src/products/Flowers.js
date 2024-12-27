@@ -31,7 +31,7 @@ function Flowers() {
   useEffect(() => {
     const fetchBouquets = async () => {
       axios.get(
-        `${config.NODE_SERVICE}/api/products`)
+        `${config.NODE_SERVICE}/api/products`,{ withCredentials: true })
         .then(response => {
           setBouquets(response.data);
         })

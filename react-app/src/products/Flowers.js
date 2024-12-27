@@ -75,7 +75,8 @@ function Flowers() {
 
               />
               <h3>{bouquet.title}</h3>
-              <p>{bouquet.price}</p>
+              <p>${bouquet.price}</p>
+              <p>${bouquet.tag}</p>
               <button onClick={() => handleAddToCart(bouquet)}
                 className={`add-to-cart-btn ${addedBouquets.includes(bouquet._id) ? 'added-to-cart' : 'add-to-cart'}`}
               >{addedBouquets.includes(bouquet._id) ? 'Remove from cart' : 'Add to Cart'} </button>

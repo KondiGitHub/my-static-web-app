@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { CartContext } from "../CartContext";
@@ -12,6 +12,7 @@ function Header({ title, showCart = true }) {
   const { user,login } = useContext(UserContext);
   const { cartCount } = useContext(CartContext);
   const config = useContext(ConfigContext);
+  const [sessionCheck, setSessionCheck] = useState(null);
 
 
   axios.interceptors.response.use(
@@ -30,23 +31,28 @@ function Header({ title, showCart = true }) {
   useEffect(() => {
 
     const getSession = async () => {
-      try {
-        const res = await axios.get(`${config.NODE_SERVICE}/session-check`, { withCredentials: true });
-        if (res.status === 401) {
-          console.warn("Unauthorized access");
-        } else if (res.data?.user) {
-          login(res.data.user);
-        } else {
-          console.error("Session check failed: no session");
+      if(!sessionCheck)
+      {
+        try {
+          const res = await axios.get(`${config.NODE_SERVICE}/session-check`, { withCredentials: true });
+          if (res.status === 401) {
+            console.warn("Unauthorized access");
+          } else if (res.data?.user) {
+            login(res.data.user);
+            setSessionCheck("done");
+          } else {
+            console.error("Session check failed: no session");
+          }
+        } catch (err) {
+          console.error('An unexpected error occurred:', err);
         }
-      } catch (err) {
-        console.error('An unexpected error occurred:', err);
       }
+     
     };
 
     getSession();
 
-  }, [config.NODE_SERVICE,login]);
+  }, [config.NODE_SERVICE,login,sessionCheck]);
 
   return (
     <header className="header">

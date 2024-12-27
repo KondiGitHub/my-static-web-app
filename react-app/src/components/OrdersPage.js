@@ -1,15 +1,17 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { ConfigContext } from '../ConfigContext';
 import Header from "./Header";
 import { UserContext } from '../UserContext';
+import './Order.css'; // Import the CSS file
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-   const config = useContext(ConfigContext);
-   const { user  } = useContext(UserContext); // Access context
+  const [expandedOrders, setExpandedOrders] = useState({});
+  const config = useContext(ConfigContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -26,56 +28,64 @@ const OrdersPage = () => {
     fetchOrders();
   }, [config, user]);
 
+  const toggleOrderDetails = (orderNumber) => {
+    setExpandedOrders((prevState) => ({
+      ...prevState,
+      [orderNumber]: !prevState[orderNumber],
+    }));
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ padding: '20px' }}>
-        < Header title={"Order Page"} />
+    <div className="orders-page">
+      <Header title={"Order Page"} />
       <h1>Orders</h1>
       {orders.length === 0 ? (
         <p>No orders found for {user.email}</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Order Number</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Items</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Purchase Date</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Total Price</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Payment Status</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Payment TrackingID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.orderNumber}>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{order.orderNumber}</td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>
-                  {order.items.map((item, index) => (
-                    <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    {/* Item Image */}
-                    <img 
-                      src={item.src} 
-                      alt={item.title} 
-                      style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }} 
-                    />
-                    
-                    {/* Item Details */}
-                    <div>
-                      {index + 1}. {item.title} - ${item.price}
-                    </div>
+        <div>
+          {orders.map((order) => (
+            <div key={order.orderNumber} className="order-card">
+              <div
+                onClick={() => toggleOrderDetails(order.orderNumber)}
+                className="order-header"
+              >
+                <span>Order Number: {order.orderNumber}</span>
+                <span>{expandedOrders[order.orderNumber] ? '▲' : '▼'}</span>
+              </div>
+
+              {expandedOrders[order.orderNumber] && (
+                <div>
+                  <div className="order-section">
+                    <strong>Items:</strong>
+                    {order.items.map((item, index) => (
+                      <div key={index} className="order-item">
+                        <img src={item.src} alt={item.title} />
+                        <span>
+                          {index + 1}. {item.title} - ${item.price}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                  ))}
-                </td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{new Date(order.purchaseDate).toLocaleDateString()}</td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>${order.totalPrice}</td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{order.purchaseStatus}</td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{order.paymentTrackId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <div className="order-section">
+                    <strong>Purchase Date:</strong> {new Date(order.purchaseDate).toLocaleDateString()}
+                  </div>
+                  <div className="order-section">
+                    <strong>Total Price:</strong> ${order.totalPrice}
+                  </div>
+                  <div className="order-section">
+                    <strong>Payment Status:</strong> {order.purchaseStatus}
+                  </div>
+                  <div>
+                    <strong>Payment Tracking ID:</strong> {order.paymentTrackId}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -1,12 +1,10 @@
 ---
-page_type: sample
+page_type: static web App
 languages:
   - javascript
-  - typescript
 products:
-  - azure functions
-description: 'Apps that can be used with as a starting point for some MS Learn Modules.'
-urlFragment: 'https://github.com/MicrosoftDocs/mslearn-staticwebapp'
+  - Sample E-Commerce application which integreted with backedn node service 
+description: ' This is personal POC project for E-commerce applications'
 ---
 
 # Official Microsoft Sample
@@ -21,7 +19,7 @@ The shopping theme is used throughout the app.
 
 ## Pre-Reqs
 
-- Familiarity with one of Angular, React, Svelte, or Vue
+- Familiarity with one of React, Node and  basic knowledge of restful services
 - [Node.js LTS and Git](https://nodejs.org/)
 - [GitHub](https://github.com) account
 - [Visual Studio Code](https://code.visualstudio.com)
@@ -32,11 +30,7 @@ The apps written in the following JavaScript frameworks/libraries:
 
 | folder          | Description                                                                                                   |
 | --------------- | ------------------------------------------------------------------------------------------------------------- |
-| **angular-app** | [Sample Angular app](https://github.com/MicrosoftDocs/mslearn-staticwebapp/tree/main/angular-app)             |
-| **api-starter** | [Sample Azure Functions app](https://github.com/MicrosoftDocs/mslearn-staticwebapp-api/tree/main/api-starter) |
 | **react-app**   | [Sample React app](https://github.com/MicrosoftDocs/mslearn-staticwebapp/tree/main/react-app)                 |
-| **svelte-app**  | [Sample Svelte app](https://github.com/MicrosoftDocs/mslearn-staticwebapp/tree/main/svelte-app)               |
-| **vue-app**     | [Sample Vue app](https://github.com/MicrosoftDocs/mslearn-staticwebapp/tree/main/vue-app)                     |
 
 ## Prerequisites
 
@@ -48,7 +42,7 @@ The apps written in the following JavaScript frameworks/libraries:
 
 ## Problems or Suggestions
 
-[Open an issue here](https://github.com/MicrosoftDocs/mslearn-staticwebapp/issues)
+
 
 ## Resources
 
@@ -60,13 +54,6 @@ The apps written in the following JavaScript frameworks/libraries:
 - [Authentication and authorization](https://docs.microsoft.com/azure/static-web-apps/authentication-authorization?wt.mc_id=mslearn_staticwebapp-github-jopapa)
 - [Routes](https://docs.microsoft.com/azure/static-web-apps/routes?wt.mc_id=mslearn_staticwebapp-github-jopapa)
 - [Review pre-production environments](https://docs.microsoft.com/azure/static-web-apps/review-publish-pull-requests?wt.mc_id=mslearn_staticwebapp-github-jopapa)
-
-### Azure Functions
-
-- Learn how to [Refactor Node.js and Express APIs to Serverless APIs with Azure Functions](https://docs.microsoft.com/learn/modules/shift-nodejs-express-apis-serverless/?wt.mc_id=mslearn_staticwebapp-github-jopapa)
-- Learn about the Azure Functions [local.settings.json](https://docs.microsoft.com/azure/azure-functions/functions-run-local#local-settings-file?wt.mc_id=mslearn_staticwebapp-github-jopapa) file
-- Learn how to [Deploy to Azure Using Azure Functions](https://code.visualstudio.com/tutorials/functions-extension/getting-started?wt.mc_id=mslearn_staticwebapp-github-jopapa)
-- Sign up for a [Free Trial of Azure](https://azure.microsoft.com/free/?wt.mc_id=mslearn_staticwebapp-github-jopapa)
 
 ### Visual Studio Code
 

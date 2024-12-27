@@ -5,7 +5,7 @@ import Header from "./Header";
 
 const Home = (props) => (
   <div>
-    < Header title={"Payment Confirmation"} />
+    < Header title={"Welcome to Ammulu Arts"} />
  <nav>
     <h1>Welcome to Our App</h1>
     <ul>

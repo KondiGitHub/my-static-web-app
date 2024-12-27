@@ -1,60 +1,57 @@
 .header {
-    display: flex;
-    width: 95%;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: grey;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  .header-h1 {
-    font-size: 2rem;
-    color:lightblue;
-    margin: 0;
-  }
-  
-  .header-buttons {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .header-buttons a {
-    background-color: #007bff;
-    text-decoration: none; 
-  
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .header-buttons a:hover {
-    background-color: green;
-  }
+  display: flex;
+  width: 95%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: grey;
+  border-bottom: 2px solid #ddd;
+  box-sizing: border-box; /* Ensure consistent sizing */
+}
 
-  /* Responsive adjustments */
+.header-h1 {
+  font-size: 2rem;
+  color: lightblue;
+  margin: 0;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.header-buttons a {
+  background-color: #007bff;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+  max-width: 150px; /* Limit the button width */
+  text-align: center; /* Center the button text */
+}
+
+.header-buttons a:hover {
+  background-color: green;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .header {
+  .header {
       flex-direction: column;
       align-items: flex-start;
-    }
-  
-    /* .header-buttons {
-      flex-direction: column;
-      align-items: flex-start;
-      background-color: #0056b3;
-    } */
+  }
 
-    .header-buttons {
+  .header-buttons {
       flex-direction: column;
       gap: 10px; /* Add space between buttons */
-      width: 100%; /* Ensure full-width for the container */
-      align-items: flex-start; /* Align items to the left */
-      padding: 10px; /* Add padding for spacing */
-    }
-  
-    .header-buttons a {
-      width: 100%; /* Make buttons full-width */
-      text-align: center; /* Center text inside buttons */
-    }
+      width: 100%; /* Ensure the container spans the full width */
+      align-items: center; /* Center the buttons within the header */
   }
+
+  .header-buttons a {
+      width: auto; /* Adjust button width dynamically */
+      max-width: 90%; /* Prevent buttons from exceeding the header width */
+      text-align: center; /* Center the button text */
+  }
+}

@@ -1,65 +1,112 @@
+/* Flower.css */
+
+/* Styles for flower-body container */
 .flower-body {
-  max-height: 100vh; /* Ensures the container doesn't exceed the viewport height */
-  overflow-y: auto; /* Adds a vertical scrollbar when content overflows */
-  padding: 20px; /* Optional: Adds spacing inside the container */
-  box-sizing: border-box; /* Ensures padding is included in height calculation */
-  background-color: #fff; /* Optional: Background color */
+  padding: 20px;
 }
 
-.image-pop-up {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+.categories {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Category container styles */
+.category {
+  margin-bottom: 20px;
+}
+
+/* Category header styles */
+.category-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  z-index: 2000;
+  cursor: pointer;
+  font-size: 1.2rem;
 }
 
-.flower {
+/* Button to toggle the category visibility */
+.toggle-btn {
+  padding: 5px 10px;
+  background-color: #008cba;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Styles for items under each category */
+.category-items {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
-  gap: 20px; /* Space between grid items */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusts grid columns based on screen size */
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Styles for each item */
+.flower-item {
+  border: 1px solid #ddd;
   padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #f9f9f9;
 }
 
-.flower-image {
-  display: flex;
-  flex-direction: column; /* Stack image and text */
-  align-items: center; /* Center-align items */
-  background-color: #f9f9f9; /* Optional: background color */
-  border: 1px solid #ddd; /* Optional: border */
-  border-radius: 10px; /* Optional: rounded corners */
-  overflow: hidden; /* Ensure content stays inside bounds */
-  padding: 5px;
+.flower-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
-.flower-image-src {
-  width: 100%; /* Make images fill the grid cell */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 5px; /* Optional: rounded corners for images */
+.flower-item h3 {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+.flower-item p {
+  font-size: 1rem;
 }
 
 .add-to-cart-btn {
-  /* margin-top: 0px;
-  padding: 10px 20px; */
-  background-color: #007bff;
+  padding: 10px 20px;
+  background-color: #008cba;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.add-to-cart-btn.added-to-cart {
+  background-color: #d9534f; /* Change to a red color when item is in the cart */
 }
 
 .add-to-cart-btn:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-}
-.added-to-cart {
-  color: green; /* Green text for "Added to Cart" */
+  background-color: #005f6b;
 }
 
-.add-to-cart {
-  color: blue; /* Blue text for "Add to Cart" */
+/* For mobile screens */
+@media screen and (max-width: 768px) {
+  .flower-item {
+    flex: 1 1 100%;  /* 1 item per row */
+  }
+
+  .category-header {
+    font-size: 1.2rem;
+  }
+}
+
+/* For tablets (768px to 1024px) */
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .flower-item {
+    flex: 1 1 48%;  /* 2 items per row */
+  }
+}
+
+/* For larger screens (desktops) */
+@media screen and (min-width: 1025px) {
+  .flower-item {
+    flex: 1 1 30%;  /* 3 items per row */
+  }
 }

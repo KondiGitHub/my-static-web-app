@@ -1,33 +1,28 @@
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from '../CartContext';
-import './Flower.css'
-import axios from 'axios'; // If you're using axios
 import { ConfigContext } from '../ConfigContext';
 import Header from "../components/Header";
+import axios from 'axios';
+import './Flower.css';
 
 function Flowers() {
-  const [bouquets, setBouquets] = useState([]);
+  const [categories, setCategories] = useState([]); // Categories data with items
+  const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded
   const [errorMessage, setErrorMessage] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const {cart, addToCart, removeFromCart } = useContext(CartContext);
+  const { cart, addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
+  const [addedItems, setAddedItems] = useState([]); // Track added items in the cart
 
-  const [addedBouquets, setAddedBouquets] = useState([]);
-  
-
-  const handleAddToCart = (bouquet) => {
-   
-    if (addedBouquets.includes(bouquet._id)) {
-      setAddedBouquets(addedBouquets.filter(id => id !== bouquet._id)); // Remove bouquet from the cart
-      removeFromCart(bouquet._id);
+  const handleAddToCart = (item) => {
+    if (addedItems.includes(item._id)) {
+      setAddedItems(addedItems.filter(id => id !== item._id));
+      removeFromCart(item._id);
     } else {
-      setAddedBouquets([...addedBouquets, bouquet._id]); // Add bouquet to the cart
-      addToCart(bouquet);
+      setAddedItems([...addedItems, item._id]);
+      addToCart(item);
     }
   };
-
 
   useEffect(() => {
     // Update addedBouquets only when cart changes
@@ -36,72 +31,73 @@ function Flowers() {
   }, [cart]); // Depend only on cart
 
   useEffect(() => {
-
-    const fetchBouquets = async () => {
-      axios.get(
-        `${config.NODE_SERVICE}/api/products`,{ withCredentials: true })
-        .then(response => {
-          setBouquets(response.data);
-        })
-        .catch(err => {
-          setErrorMessage(err.message); // Set error message in case of failure
-        });
-
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${config.NODE_SERVICE}/api/products`, { withCredentials: true });
+        const groupedByCategory = response.data.reduce((acc, item) => {
+          if (!acc[item.category]) acc[item.category] = [];
+          acc[item.category].push(item);
+          return acc;
+        }, {});
+        setCategories(Object.entries(groupedByCategory)); // Convert to array of [category, items]
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
     };
-
-    fetchBouquets();
+    fetchCategories();
   }, [config.NODE_SERVICE]);
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-  };
-
-  const closeImageModal = () => {
-    setSelectedImage(null);
+  const toggleCategory = (category) => {
+    setExpandedCategory(expandedCategory === category ? null : category);
   };
 
   return (
     <div className="flower-body">
-       <Header title="Stocking Cloth Flowers for Sale" />
-      <h1>
-        Choose from a wide variety of beautiful cloth flower bouquets!
-      </h1>
+      <Header title="Stocking Cloth Flowers for Sale" />
+      <h1>Browse through a diverse range of beautiful handmade crafts</h1>
+
       {errorMessage ? (
         <p className="err-msg">{errorMessage}</p>
       ) : (
-        <div className="flower">
-          {bouquets.map((bouquet) => (
-            <div
-              key={bouquet._id}
-              className="flower-image"
-            >
-              <img
-                src={bouquet.src}
-                alt={bouquet.title}
-                className="flower-image-src"
-                onClick={() => handleImageClick(bouquet.src)}
+        <div className="categories">
+          
+          {categories.map(([category, items]) => (
+            <div key={category} className="category">
+              {/* Category Header */}
+              <div
+                className="category-header"
+                onClick={() => toggleCategory(category)}
+              >
+                <h2>{category}: </h2>
+                <button className="toggle-btn">
+                  {expandedCategory === category ? "Collapse" : "Expand"}
+                </button>
+              </div>
 
-              />
-              <h3>{bouquet.title}</h3>
-              <p>price: ${bouquet.price}</p>
-              <p>itemId: {bouquet.tag}</p>
-              <button onClick={() => handleAddToCart(bouquet)}
-                className={`add-to-cart-btn ${addedBouquets.includes(bouquet._id) ? 'added-to-cart' : 'add-to-cart'}`}
-              >{addedBouquets.includes(bouquet._id) ? 'Remove from cart' : 'Add to Cart'} </button>
+              {/* Category Items */}
+              {expandedCategory === category && (
+                <div className="category-items">
+                  {items.map((item) => (
+                    <div key={item._id} className="flower-item">
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="flower-image-src"
+                      />
+                      <h3>{item.title}</h3>
+                      <p>Price: ${item.price}</p>
+                      <button
+                        onClick={() => handleAddToCart(item)}
+                        className={`add-to-cart-btn ${addedItems.includes(item._id) ? 'added-to-cart' : 'add-to-cart'}`}
+                      >
+                        {addedItems.includes(item._id) ? "Remove from Cart" : "Add to Cart"}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
-        </div>
-      )}
-
-      {selectedImage && (
-        <div className="image-pop-up"
-          onClick={closeImageModal}
-        >
-          <img
-            src={selectedImage}
-            alt="Selected"
-            style={{ maxWidth: "90%", maxHeight: "90%" }}
-          />
         </div>
       )}
     </div>

@@ -27,7 +27,7 @@ function Flowers() {
   useEffect(() => {
     // Update addedBouquets only when cart changes
     const cartBouquetIds = cart.map((item) => item._id);
-    setAddedBouquets(cartBouquetIds);
+    setAddedItems(cartBouquetIds);
   }, [cart]); // Depend only on cart
 
   useEffect(() => {

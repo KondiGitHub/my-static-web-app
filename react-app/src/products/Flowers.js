@@ -10,7 +10,7 @@ function Flowers() {
   const [bouquets, setBouquets] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { addToCart, removeFromCart } = useContext(CartContext);
+  const {cart, addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
 
@@ -28,7 +28,15 @@ function Flowers() {
     }
   };
 
+
   useEffect(() => {
+    // Update addedBouquets only when cart changes
+    const cartBouquetIds = cart.map((item) => item._id);
+    setAddedBouquets(cartBouquetIds);
+  }, [cart]); // Depend only on cart
+
+  useEffect(() => {
+
     const fetchBouquets = async () => {
       axios.get(
         `${config.NODE_SERVICE}/api/products`,{ withCredentials: true })

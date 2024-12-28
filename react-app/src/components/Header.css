@@ -35,6 +35,16 @@
   background-color: green;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 50px; /* Adjust height as needed */
+  margin-right: 10px; /* Space between logo and title */
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .header {

@@ -7,6 +7,7 @@ import axios from 'axios'; // If you're using axios
 import { CartContext } from '../CartContext';
 import { ConfigContext } from '../ConfigContext';
 import Header from "./Header";
+import { useNavigate } from 'react-router-dom';
 
 function Payment() {
 
@@ -18,9 +19,14 @@ function Payment() {
   const [data, setData] = useState(null);
    const config = useContext(ConfigContext);
   const [ orderNumber, setOrderNumber ] = useState('');
+  const navigate = useNavigate(); // Use useHistory instead of useNavigate
   
 
   useEffect(() => {
+
+    if (cart.length === 0) {
+      navigate('/cart'); // Redirect to cart if the cart is empty
+    }
 
     const getPubKey = async () => {
       const res = await axios.get(
@@ -76,7 +82,7 @@ function Payment() {
     getPubKey();
     sendOrder();
     postData();
-  }, [cart, config.NODE_SERVICE,totalPrice]);
+  }, [cart, config.NODE_SERVICE,totalPrice,navigate]);
 
   if (!data) {
     return <div>Loading...</div>; // Show loading state until data is fetched

@@ -10,7 +10,7 @@ import { ConfigContext } from '../ConfigContext';
 
 function Header({ title, showCart = true }) {
   const { user,login } = useContext(UserContext);
-  const { cartCount } = useContext(CartContext);
+  const { cartCount,cart,setCartCount  } = useContext(CartContext);
   const config = useContext(ConfigContext);
   const [sessionCheck, setSessionCheck] = useState(null);
 
@@ -26,6 +26,12 @@ function Header({ title, showCart = true }) {
       return Promise.reject(error); // Throw other errors
     }
   );
+
+  useEffect(() => {
+    if (cartCount !== cart.length) { // Use cart.length if cart is an array
+      setCartCount(cart.length);    // Update using the context method
+    }
+  }, [cart, cartCount, setCartCount]);
 
 
   useEffect(() => {
@@ -56,6 +62,13 @@ function Header({ title, showCart = true }) {
 
   return (
     <header className="header">
+       <div className="header-left">
+
+
+       <Link to="/AmmuArts">
+          <img src="/AmmuArts.jpg" alt="Ammu Arts Logo" className="brand-logo" />
+        </Link>
+        </div>
       <h1 className="header-h1">{title}</h1> {/* Use the passed title prop */}
       <div className="header-buttons">
         <Link to="/signup">Sign Up</Link>

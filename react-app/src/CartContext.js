@@ -18,15 +18,33 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-    const addToCart = (item) => {
-        setCart((prevCart) => [...prevCart, item]);
-        setCartCount(cartCount + 1); // Increment item count
-    };
+  const addToCart = (item) => {
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((cartItem) => cartItem._id === item._id);
+      if (existingItem) {
+        return prevCart.map((cartItem) =>
+          cartItem._id === item._id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      }
+      return [...prevCart, { ...item, quantity: 1 }];
+    });
+  };
 
-    const removeFromCart = (id) => {
-        setCart((prevCart) => prevCart.filter((item) => item._id !== id));
-        setCartCount(cartCount - 1); // Increment item count
-    };
+  const removeFromCart = (itemId) => {
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((cartItem) => cartItem._id === itemId);
+      if (existingItem && existingItem.quantity > 1) {
+        return prevCart.map((cartItem) =>
+          cartItem._id === itemId
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        );
+      }
+      return prevCart.filter((cartItem) => cartItem._id !== itemId);
+    });
+  };
 
     const updateQuantity = (id, quantity) => {
         setCart((prevCart) =>

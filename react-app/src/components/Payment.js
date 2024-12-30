@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 function Payment() {
 
  const { cart } = useContext(CartContext);
- const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price), 0);
+ const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price * item.quantity), 0);
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ clientSecret, setClientSecret ] = useState('');
   const [ stripePromise, setStripePromise ] = useState('');
@@ -47,7 +47,9 @@ function Payment() {
               price: item.price,
               tag: item.tag,
               src: item.src,
-              title: item.title
+              title: item.title,
+              category: item.category,
+              quantity: item.quantity
             })),
             totalPrice,
           },{ withCredentials: true }

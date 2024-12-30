@@ -9,7 +9,7 @@ function Cart() {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
   //const { user } = useContext(UserContext); // Access user from context
 
-  const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price), 0);
+  const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price * item.quantity), 0);
 
   return (
     <div className="flower-body">
@@ -29,7 +29,8 @@ function Cart() {
                   alt={item.title}
                 />
                 <h3>{item.title}</h3>
-                <p>${item.price}</p>
+                <p>price: ${item.price}</p>
+                <p>quantity: {item.quantity}</p>
                 <button onClick={() => removeFromCart(item._id)}>Remove</button>
               </div>
             ))}

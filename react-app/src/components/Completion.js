@@ -4,11 +4,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import { ConfigContext } from '../ConfigContext';
 import { useLocation } from 'react-router-dom';
 import Header from "./Header";
+import { CartContext } from '../CartContext';
 
 function Completion() {
   const [ messageBody, setMessageBody ] = useState('');
   const config = useContext(ConfigContext);
   const location = useLocation();
+    const { clearCart } = useContext(CartContext);
 
   // Create a URLSearchParams object from the query string
  
@@ -25,6 +27,9 @@ function Completion() {
           purchaseStatus: error ? error.message : paymentIntent.status
         }
       );
+      if('succeeded' === paymentIntent.status ) {
+        clearCart();
+      }
       console.log(orderResponse.data);
     }
 
@@ -47,7 +52,7 @@ function Completion() {
       
       getPubKey();
     
-  }, [config.NODE_SERVICE,location]);
+  }, [config.NODE_SERVICE,location,clearCart]);
 
   return (
     <>

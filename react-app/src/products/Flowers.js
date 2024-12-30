@@ -12,23 +12,21 @@ function Flowers() {
   const { cart, addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
-  const [addedItems, setAddedItems] = useState([]); // Track added items in the cart
+  //  const [addedItems, setAddedItems] = useState([]); // Track added items in the cart
 
   const handleAddToCart = (item) => {
-    if (addedItems.includes(item._id)) {
-      setAddedItems(addedItems.filter(id => id !== item._id));
-      removeFromCart(item._id);
-    } else {
-      setAddedItems([...addedItems, item._id]);
-      addToCart(item);
-    }
+    addToCart(item);
   };
 
-  useEffect(() => {
-    // Update addedBouquets only when cart changes
-    const cartBouquetIds = cart.map((item) => item._id);
-    setAddedItems(cartBouquetIds);
-  }, [cart]); // Depend only on cart
+  const handleRemoveFromCart = (item) => {
+    removeFromCart(item._id);
+  };
+
+  // useEffect(() => {
+  //   // Update addedBouquets only when cart changes
+  //   const cartBouquetIds = cart.map((item) => item._id);
+  //   setAddedItems(cartBouquetIds);
+  // }, [cart]); // Depend only on cart
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -60,7 +58,7 @@ function Flowers() {
         <p className="err-msg">{errorMessage}</p>
       ) : (
         <div className="categories">
-          
+
           {categories.map(([category, items]) => (
             <div key={category} className="category">
               {/* Category Header */}
@@ -77,23 +75,25 @@ function Flowers() {
               {/* Category Items */}
               {expandedCategory === category && (
                 <div className="category-items">
-                  {items.map((item) => (
-                    <div key={item._id} className="flower-item">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="flower-image-src"
-                      />
-                      <h3>{item.title}</h3>
-                      <p>Price: ${item.price}</p>
-                      <button
-                        onClick={() => handleAddToCart(item)}
-                        className={`add-to-cart-btn ${addedItems.includes(item._id) ? 'added-to-cart' : 'add-to-cart'}`}
-                      >
-                        {addedItems.includes(item._id) ? "Remove from Cart" : "Add to Cart"}
-                      </button>
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const cartItem = cart.find((cartItem) => cartItem._id === item._id);
+                    const quantity = cartItem ? cartItem.quantity : 0;
+
+                    return (
+                      <div key={item._id} className="flower-item">
+                        <img src={item.src} alt={item.title} className="flower-image-src" />
+                        <h3>{item.title}</h3>
+                        <p>Price: ${item.price}</p>
+                        <div className="cart-controls">
+                          <button onClick={() => handleRemoveFromCart(item)} disabled={!quantity}>
+                            -
+                          </button>
+                          <span>{quantity}</span>
+                          <button onClick={() => handleAddToCart(item)}>+</button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

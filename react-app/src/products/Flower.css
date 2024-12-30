@@ -86,6 +86,22 @@
   background-color: #005f6b;
 }
 
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-controls button {
+  padding: 5px 10px;
+  background-color: #008cba;
+}
+
+.cart-controls span {
+  min-width: 20px;
+  text-align: center;
+}
+
 /* For mobile screens */
 @media screen and (max-width: 768px) {
   .flower-item {

@@ -51,7 +51,7 @@ function Flowers() {
 
   return (
     <div className="flower-body">
-      <Header title="Stocking Cloth Flowers for Sale" />
+      <Header title="Handmade Craft Items" />
       <h1>Browse through a diverse range of beautiful handmade crafts</h1>
 
       {errorMessage ? (

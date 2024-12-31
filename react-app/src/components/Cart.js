@@ -1,21 +1,14 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../CartContext';
 import { Link } from 'react-router-dom';
-//import { UserContext } from '../UserContext';
 import './Cart.css';
-import Header from "../components/Header";
 
 function Cart() {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
-  //const { user } = useContext(UserContext); // Access user from context
-
   const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price * item.quantity), 0);
 
   return (
     <div className="flower-body">
-     
-      <Header title="Shopping Cart"  showCart={false}/>
-
       {/* Main Content */}
       <div className="main-content">
         {cart.length === 0 ? (

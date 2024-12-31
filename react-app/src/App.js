@@ -16,7 +16,9 @@ import PrivateRoute from './components/PrivateRoute';
 import Cart from './components/Cart';
 import OrdersPage from './components/OrdersPage';
 import ContactUs from './components/ContactUs';
-//import { UserContext } from './UserContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 // Lazy-loaded component
 const Products = lazy(() => import(/* webpackChunkName: "products" */ './products/Products'));
@@ -38,7 +40,7 @@ class App extends Component {
   render() {
     return (
         <div>
-          {/* <HeaderBar /> */}
+         <Header />
           <div className="section columns">
             {/* <NavBar /> */}
             <main className="column">
@@ -67,10 +69,13 @@ class App extends Component {
                   <Route path="/products" element={<Products />} />
                   <Route path="/orders" element={<OrdersPage />} />
                   <Route path="/contact-us" element={<ContactUs />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </main>
+          <Footer />
           </div>
         </div>
     );

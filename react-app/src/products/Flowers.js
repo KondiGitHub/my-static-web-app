@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from '../CartContext';
 import { ConfigContext } from '../ConfigContext';
-import Header from "../components/Header";
 import axios from 'axios';
 import './Flower.css';
 
@@ -43,7 +42,6 @@ function Flowers() {
 
   return (
     <div className="flower-body">
-      <Header title="Handmade Craft Items" />
       <h1>Browse through a diverse range of beautiful handmade crafts</h1>
 
       {errorMessage ? (

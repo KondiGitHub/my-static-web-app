@@ -74,7 +74,6 @@ function Header({ title, showCart = true }) {
         <Link to="/signup">Sign Up</Link>
         {user ? <AccountProfilePage /> : <Link to="/login">Sign In</Link>}
         {showCart && <Link to="/cart">Cart ({cartCount})</Link>}
-        <Link to="/contact-us">Contact Us</Link>
       </div>
     </header>
   );

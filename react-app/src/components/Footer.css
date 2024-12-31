@@ -1,0 +1,76 @@
+/* Header Container */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: lightsteelblue;
+  color: #ecf0f1; /* Light text color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  margin-right: 20px; /* Add space between the logo and heading */
+}
+
+/* Logo Section */
+.header-left img {
+  height: 60px;
+}
+
+/* Title Section */
+.header-h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ecf0f1;
+  margin: 0 20px; 
+  text-align: center;
+}
+
+/* Buttons Section */
+.header-buttons {
+  display: flex; /* Align buttons horizontally */
+  gap: 10px; /* Add spacing between buttons */
+  align-items: center; /* Vertically align buttons */
+}
+
+.header-buttons a, 
+.account-dropdown {
+  display: inline-block; /* Ensure buttons are inline, not block-level */
+  padding: 8px 16px; /* Set appropriate padding for height and width */
+  line-height: 1; /* Keep text compact */
+  background-color: #3498db; /* Blue */
+  color: white;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 14px; /* Set font size */
+  border-radius: 6px; /* Rounded corners */
+  text-align: center; /* Center-align text inside buttons */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Hover effects */
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: auto; /* Ensure auto width based on padding */
+}
+
+.header-buttons a:hover,
+.account-dropdown:hover {
+  background-color: #2980b9; /* Darker blue for hover */
+  transform: scale(1.05); /* Slight enlarge on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+}

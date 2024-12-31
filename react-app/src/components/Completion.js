@@ -3,18 +3,13 @@ import axios from 'axios'; // If you're using axios
 import { loadStripe } from "@stripe/stripe-js";
 import { ConfigContext } from '../ConfigContext';
 import { useLocation } from 'react-router-dom';
-import Header from "./Header";
 import { CartContext } from '../CartContext';
 
 function Completion() {
   const [ messageBody, setMessageBody ] = useState('');
   const config = useContext(ConfigContext);
   const location = useLocation();
-    const { clearCart } = useContext(CartContext);
-
-  // Create a URLSearchParams object from the query string
- 
-
+  const { clearCart } = useContext(CartContext);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -56,7 +51,6 @@ function Completion() {
 
   return (
     <>
-      < Header title={"Payment Confirmation"} />
       <h1>Thank you!</h1>
       <a href="/">home</a>
       <div id="messages" role="alert" style={messageBody ? {display: 'block'} : {}}>{messageBody}</div>

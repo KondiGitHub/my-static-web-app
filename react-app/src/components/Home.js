@@ -1,15 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Home.css'; // Ensure you style the page with this file
-import Header from './Header';
+import './Home.css'; 
 
 const Home = (props) => {
   return (
     <div className="home-container">
-      {/* Header Section */}
-      <Header title={"Welcome to Ammu Arts"} />
-
-      {/* Navigation Section */}
       <nav className="nav-bar">
         <NavLink to="/AmmuArts" className="nav-link">
           Explore Ammu Arts

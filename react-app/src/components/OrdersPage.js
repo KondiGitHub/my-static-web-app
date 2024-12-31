@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { ConfigContext } from '../ConfigContext';
-import Header from "./Header";
 import { UserContext } from '../UserContext';
 import './Order.css'; // Import the CSS file
 
@@ -60,7 +59,6 @@ const OrdersPage = () => {
 
   return (
     <div className="orders-page">
-      <Header title={"Order Page"} />
       <h1>Orders</h1>
       {orders.length === 0 ? (
         <p>No orders found for {user.email}</p>

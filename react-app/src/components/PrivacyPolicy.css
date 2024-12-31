@@ -1,0 +1,30 @@
+/* PrivacyPolicy.css */
+
+.privacy-policy {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+  }
+  

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import axios from 'axios'; // If you're using axios
 import { CartContext } from '../CartContext';
 import { ConfigContext } from '../ConfigContext';
-import Header from "./Header";
 import { useNavigate } from 'react-router-dom';
 
 function Payment() {
@@ -96,7 +95,6 @@ function Payment() {
         errorMessage ? (<p style={{ color: "red" }} > {errorMessage}</p >)
           : (<Elements stripe={stripePromise} options={{ clientSecret }}>
             <div>
-            < Header title={"Payment"} />
               <h4>orderAmount: ${totalPrice}</h4>
               <h4>orderNumber: {orderNumber}</h4>
               <CheckoutForm orderNumber={orderNumber}/>

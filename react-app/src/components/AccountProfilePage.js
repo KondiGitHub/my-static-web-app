@@ -2,11 +2,9 @@ import React,{useContext,useState } from 'react';
 import { UserContext } from '../UserContext';
 import { Link } from "react-router-dom";
 import './Profile.css'
-//import { useNavigate  } from 'react-router-dom';
 
 const AccountProfilePage = () => {
   const { user, logout } = useContext(UserContext);
- // const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false); 
 
 
@@ -16,7 +14,6 @@ const AccountProfilePage = () => {
 
   const handleLogout = () => {
     logout();
-    //navigate("/login"); // Redirect to login page after logout
   };
 
   return (

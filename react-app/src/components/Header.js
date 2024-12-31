@@ -73,7 +73,8 @@ function Header({ title, showCart = true }) {
       <div className="header-buttons">
         <Link to="/signup">Sign Up</Link>
         {user ? <AccountProfilePage /> : <Link to="/login">Sign In</Link>}
-        {showCart && <Link to="/cart">Cart ({cartCount})</Link>} {/* Conditionally show cart */}
+        {showCart && <Link to="/cart">Cart ({cartCount})</Link>}
+        <Link to="/contact-us">Contact Us</Link>
       </div>
     </header>
   );

@@ -12,8 +12,6 @@ function Flowers() {
   const { cart, addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
-  //  const [addedItems, setAddedItems] = useState([]); // Track added items in the cart
-
   const handleAddToCart = (item) => {
     addToCart(item);
   };
@@ -21,12 +19,6 @@ function Flowers() {
   const handleRemoveFromCart = (item) => {
     removeFromCart(item._id);
   };
-
-  // useEffect(() => {
-  //   // Update addedBouquets only when cart changes
-  //   const cartBouquetIds = cart.map((item) => item._id);
-  //   setAddedItems(cartBouquetIds);
-  // }, [cart]); // Depend only on cart
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -58,7 +50,6 @@ function Flowers() {
         <p className="err-msg">{errorMessage}</p>
       ) : (
         <div className="categories">
-
           {categories.map(([category, items]) => (
             <div key={category} className="category">
               {/* Category Header */}
@@ -78,6 +69,7 @@ function Flowers() {
                   {items.map((item) => {
                     const cartItem = cart.find((cartItem) => cartItem._id === item._id);
                     const quantity = cartItem ? cartItem.quantity : 0;
+                    const isMaxQuantity = quantity >= item.avil_quantity;
 
                     return (
                       <div key={item._id} className="flower-item">
@@ -89,8 +81,14 @@ function Flowers() {
                             -
                           </button>
                           <span>{quantity}</span>
-                          <button onClick={() => handleAddToCart(item)}>+</button>
+                          <button
+                            onClick={() => handleAddToCart(item)}
+                            disabled={isMaxQuantity}
+                          >
+                            +
+                          </button>
                         </div>
+                        {isMaxQuantity && <p className="not-available-note">Not available</p>}
                       </div>
                     );
                   })}

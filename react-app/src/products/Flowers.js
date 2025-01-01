@@ -8,6 +8,7 @@ function Flowers() {
   const [categories, setCategories] = useState([]); // Categories data with items
   const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded
   const [errorMessage, setErrorMessage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { cart, addToCart, removeFromCart } = useContext(CartContext);
   const config = useContext(ConfigContext);
 
@@ -17,6 +18,14 @@ function Flowers() {
 
   const handleRemoveFromCart = (item) => {
     removeFromCart(item._id);
+  };
+  
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
   };
 
   useEffect(() => {
@@ -71,7 +80,7 @@ function Flowers() {
 
                     return (
                       <div key={item._id} className="flower-item">
-                        <img src={item.src} alt={item.title} className="flower-image-src" />
+                        <img src={item.src} alt={item.title} className="flower-image-src" onClick={() => handleImageClick(item.src)}/>
                         <h3>{item.title}</h3>
                         <p>Price: ${item.price}</p>
                         <div className="cart-controls">
@@ -86,7 +95,7 @@ function Flowers() {
                             +
                           </button>
                         </div>
-                        {isMaxQuantity && <p className="not-available-note">Not available</p>}
+                        {isMaxQuantity && <p className="not-available-note">Currently not available more than {item.avil_quantity} items</p>}
                       </div>
                     );
                   })}
@@ -94,6 +103,17 @@ function Flowers() {
               )}
             </div>
           ))}
+        </div>
+      )}
+      {selectedImage && (
+        <div className="image-pop-up"
+          onClick={closeImageModal}
+        >
+          <img
+            src={selectedImage}
+            alt="Selected"
+            style={{ maxWidth: "90%", maxHeight: "90%" }}
+          />
         </div>
       )}
     </div>

@@ -92,6 +92,25 @@
   gap: 10px;
 }
 
+.flower-image-src {
+  width: 100%; /* Make images fill the grid cell */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Optional: rounded corners for images */
+}
+
+.image-pop-up {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
 .cart-controls button {
   padding: 5px 10px;
   background-color: #008cba;

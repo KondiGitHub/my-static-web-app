@@ -13,6 +13,7 @@ function Header({ title, showCart = true }) {
   const { cartCount,cart,setCartCount  } = useContext(CartContext);
   const config = useContext(ConfigContext);
   const [sessionCheck, setSessionCheck] = useState(null);
+  const [adminUser, setAdminUser] = useState('');
 
 
   axios.interceptors.response.use(
@@ -46,6 +47,16 @@ function Header({ title, showCart = true }) {
           } else if (res.data?.user) {
             login(res.data.user);
             setSessionCheck("done");
+            if(res.data.user) {
+              try {
+                  const response  = await axios.get(`${config.NODE_SERVICE}/api/user?email=${res.data.user.email}`, { withCredentials: true });
+                  const [{role}] = response.data;
+                   const adminUSer = role === 'Admin'
+                  setAdminUser(adminUSer)
+              } catch (error) {
+                console.error('An unexpected error occurred:', error);
+              }
+          }
           } else {
             console.error("Session check failed: no session");
           }
@@ -71,6 +82,7 @@ function Header({ title, showCart = true }) {
         </div>
       <h1 className="header-h1">{title}</h1> {/* Use the passed title prop */}
       <div className="header-buttons">
+      {adminUser && <Link to="/upload-images">Upload Images</Link>}
         <Link to="/signup">Sign Up</Link>
         {user ? <AccountProfilePage /> : <Link to="/login">Sign In</Link>}
         {showCart && <Link to="/cart">Cart ({cartCount})</Link>}

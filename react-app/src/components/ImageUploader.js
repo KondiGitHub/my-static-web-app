@@ -8,7 +8,6 @@ const ImageUploader = () => {
     const [path, setPath] = useState(''); // State for the container path
     const [uploadStatus, setUploadStatus] = useState('');
     const [adminUser, setAdminUser] = useState('');
-    const [uploadedUrls, setUploadedUrls] = useState([]);
     const config = useContext(ConfigContext);
     const { user } = useContext(UserContext);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -41,11 +40,16 @@ const ImageUploader = () => {
                 },
             });
 
-            setUploadStatus('Files uploaded successfully.');
-            setUploadedUrls(response.data.urls);
+            if(response.status === 200){
+                setUploadStatus('Files uploaded successfully.');
+            }else {
+                setUploadStatus('Files not uploaded  successfully.');
+            }
+
+            
+            
         } catch (error) {
             console.error('Error uploading files:', error);
-            setUploadStatus('Error uploading files.');
         }
     };
 
@@ -87,20 +91,6 @@ Not authorized
                     <input type="file" multiple onChange={handleFileChange} accept="image/*" />
                     <button onClick={handleUpload}>Upload</button>
                     <p>{uploadStatus}</p>
-                    {uploadedUrls.length > 0 && (
-                        <div>
-                            <p>Uploaded Images:</p>
-                            <ul>
-                                {uploadedUrls.map((url, index) => (
-                                    <li key={index}>
-                                        <a href={url} target="_blank" rel="noopener noreferrer">
-                                            {url}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
                     </>
                 )}
                 </div>

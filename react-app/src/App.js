@@ -20,6 +20,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ImageUploader from './components/ImageUploader';
+import ResetPassword from './components/ResetPassword';
 
 // Lazy-loaded component
 const Products = lazy(() => import(/* webpackChunkName: "products" */ './products/Products'));
@@ -72,6 +73,9 @@ class App extends Component {
                   <Route path="/contact-us" element={<ContactUs />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/upload-images" element={<ImageUploader />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+
+                  
                   
                   
                   <Route path="*" element={<NotFound />} />

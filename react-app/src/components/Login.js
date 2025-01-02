@@ -12,6 +12,9 @@ function Login() {
   const { login  } = useContext(UserContext); // Access context
   const navigate = useNavigate(); // Use useHistory instead of useNavigate
   const config = useContext(ConfigContext);
+  const [resetEmail, setResetEmail] = useState('');
+  const [showResetForm, setShowResetForm] = useState(false);
+  const [resetMessage, setResetMessage] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,30 +45,91 @@ function Login() {
     }
   };
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`${config.NODE_SERVICE}/api/forgot-password`, 
+        {email: resetEmail},
+        { withCredentials: true }
+      );
+      // const response = await fetch('/api/forgot-password', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email: resetEmail }),
+      // });
+
+      if (!response.ok) {
+        throw new Error('Failed to send reset email.');
+      }
+
+      setResetMessage('Reset link sent to your email.');
+    } catch (error) {
+      setResetMessage('Error: Unable to send reset email.');
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email: </label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required
-          />
-        </div>
-        <div>
-          <label>Password: </label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required
-          />
-        </div>
-        <button type="submit" style={{ "background-color": "green" }}>Login</button>
-      </form>
+
+      {!showResetForm ? (
+        <form onSubmit={handleLogin}>
+          <div>
+            <label>Email: </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" style={{ backgroundColor: 'green' }}>
+            Login
+          </button>
+          <button
+            type="button"
+            style={{ backgroundColor: 'blue', marginLeft: '10px' }}
+            onClick={() => setShowResetForm(true)}
+          >
+            Forgot Password
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleForgotPassword}>
+          <div>
+            <label>Enter your email: </label>
+            <input
+              type="email"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" style={{ backgroundColor: 'orange' }}>
+            Send Reset Link
+          </button>
+          <button
+            type="button"
+            style={{ backgroundColor: 'gray', marginLeft: '10px' }}
+            onClick={() => setShowResetForm(false)}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
+
+      {resetMessage && <p className="reset-message">{resetMessage}</p>}
     </div>
   );
 }

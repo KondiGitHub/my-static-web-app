@@ -2,17 +2,23 @@ import React,{useContext,useState } from 'react';
 import { UserContext } from '../UserContext';
 import { Link } from "react-router-dom";
 import './Profile.css'
+import { ConfigContext } from '../ConfigContext';
+
+import axios from 'axios'; // If you're using axios
+
 
 const AccountProfilePage = () => {
   const { user, logout } = useContext(UserContext);
   const [expanded, setExpanded] = useState(false); 
+  const config = useContext(ConfigContext);
 
 
   const handleExpand = () => {
     setExpanded(!expanded);
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await axios.post(`${config.NODE_SERVICE}/api/logout`, {}, { withCredentials: true });
     logout();
   };
 

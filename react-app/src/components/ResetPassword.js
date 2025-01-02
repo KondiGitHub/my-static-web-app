@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [token, setToken] = useState(new URLSearchParams(window.location.search).get('token'));
+    const [token] = useState(new URLSearchParams(window.location.search).get('token'));
     const config = useContext(ConfigContext);
     const navigate = useNavigate(); // Use useHistory instead of useNavigate
 

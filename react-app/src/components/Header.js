@@ -41,7 +41,7 @@ function Header({ title, showCart = true }) {
       if(!sessionCheck)
       {
         try {
-          const res = await axios.get(`${config.NODE_SERVICE}/session-check`, { withCredentials: true });
+          const res = await axios.get(`${config.NODE_SERVICE}/api/session-check`, { withCredentials: true });
           if (res.status === 401) {
             console.warn("Unauthorized access");
           } else if (res.data?.user) {
@@ -83,7 +83,7 @@ function Header({ title, showCart = true }) {
       <h1 className="header-h1">{title}</h1> {/* Use the passed title prop */}
       <div className="header-buttons">
       {adminUser && <Link to="/upload-images">Upload Images</Link>}
-        <Link to="/signup">Sign Up</Link>
+      {!user ? <Link to="/signup">Sign Up</Link>: '' }
         {user ? <AccountProfilePage /> : <Link to="/login">Sign In</Link>}
         {showCart && <Link to="/cart">Cart ({cartCount})</Link>}
       </div>

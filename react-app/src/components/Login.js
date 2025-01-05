@@ -59,7 +59,7 @@ function Login() {
       //   body: JSON.stringify({ email: resetEmail }),
       // });
 
-      if (!response.ok) {
+      if (response.status === 200) {
         throw new Error('Failed to send reset email.');
       }
 

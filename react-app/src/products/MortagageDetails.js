@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Details.css';
 
 function MortagegeDetails() {
-  const location = useLocation();
   const navigate = useNavigate();
   const savedData = JSON.parse(localStorage.getItem('previousData'));
   const { principal, annualRate, years, monthlyPayment,extraMonthlyPayment } = savedData;

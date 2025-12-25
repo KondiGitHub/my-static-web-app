@@ -353,3 +353,6 @@ MigrationBackup/
 
 local.settings.json
 .telemetry
+
+../.idea/
+../package-lock.json

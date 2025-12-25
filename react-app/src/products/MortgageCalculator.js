@@ -30,7 +30,14 @@ const MortgageCalculator = () => {
 
   // Handle form submission and navigate to the details page
   const handleCalculate = (results) => {
-    localStorage.setItem('previousData', {principal,annualRate: results.annualRate,years});
+      const data = {
+          principal,
+          annualRate: results.annualRate,
+          monthlyPayment: results.monthlyPayment,
+          extraMonthlyPayment: results.extraMonthlyPayment,
+          years
+      };
+      localStorage.setItem('previousData', JSON.stringify(data));
     navigate('/detailedLoan', {
       principal,
       annualRate: results.annualRate,

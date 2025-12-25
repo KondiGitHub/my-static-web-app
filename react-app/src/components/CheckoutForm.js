@@ -2,7 +2,7 @@ import {
   PaymentElement,
   LinkAuthenticationElement
 } from '@stripe/react-stripe-js';
-import { useState,useContext } from 'react';
+import { useState,useContext,useEffect } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import './CheckoutForm.css';
 import { USA_STATES } from '../constants/Constant';
@@ -21,6 +21,7 @@ export default function CheckoutForm({ orderNumber }) {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const config = useContext(ConfigContext);
+  const [orderDetails, setOrderDetails] = useState(null);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -39,6 +40,12 @@ export default function CheckoutForm({ orderNumber }) {
 
   const { user  } = useContext(UserContext); // Access context
 
+  useEffect(() => {
+    // Fetch order details using orderNumber
+    axios.get(`${config.NODE_SERVICE}/api/order/${orderNumber}`)
+      .then(response => setOrderDetails(response.data))
+      .catch(error => console.error('Error fetching order details:', error));
+  }, [orderNumber, config.NODE_SERVICE]);
 
   // State for address form
   const formatPhoneNumber = (value) => {
@@ -177,6 +184,21 @@ export default function CheckoutForm({ orderNumber }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+
+     {orderDetails && (
+        <div className="order-summary">
+          <h3>Order Summary</h3>
+          <ul>
+            {orderDetails.items.map(item => (
+              <li key={item.id}>
+                {item.title} - ${item.price} x {item.quantity}
+              </li>
+            ))}
+          </ul>
+          <p>Total: ${orderDetails.totalPrice}</p>
+        </div>
+      )}
+
       {/* Address Form Fields */}
       <div className="address-fields">
         <h3>Shipping Address</h3>

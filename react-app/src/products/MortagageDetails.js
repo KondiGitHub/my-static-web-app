@@ -5,8 +5,8 @@ import './Details.css';
 function MortagegeDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const { principal, annualRate, years, monthlyPayment,extraMonthlyPayment } = location.state;
+  const savedData = JSON.parse(localStorage.getItem('previousData'));
+  const { principal, annualRate, years, monthlyPayment,extraMonthlyPayment } = savedData;
   const monthlyRate = annualRate/12;
   const numPayments = years * 12;
   let balance = principal;
